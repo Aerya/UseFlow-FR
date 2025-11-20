@@ -22,7 +22,7 @@ Pour l’instant, seul un indexeur Usenet privé, soucieux de sa discrétion, es
 - ✅ **WebUI complète** : Interface d'administration moderne avec authentification
 - ✅ **Notifications Discord** : Alertes de synchronisation avec galerie d'affiches (optionnel)
 - ✅ **Gestion du proxy** : Support HTTP/HTTPS/SOCKS4/SOCKS5 avec ou sans authentification (optionnel)
-- ✅ **Sauvegarde persistante** : Base de données SQLite avec tous les catalogues
+- ✅ **Sauvegarde persistante** : Base de données SQLite avec tous les catalogues et incrémentation des contenus (ils s'ajoutent et ne se remplacent pas)
 - ✅ **Synchronisation automatique** : Planification horaire configurable (optionnel)
 - ✅ **Dockerisé** : Déploiement facile avec Docker et docker-compose
 - ✅ **Recherche intégrée** : Recherche dans les catalogues depuis Stremio
