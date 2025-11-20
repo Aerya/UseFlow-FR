@@ -1,11 +1,15 @@
-<p align="center">
-  <strong>UseFlow-FR  </strong>
+<p align="center" style="font-size: 48px; font-weight: bold; color: #2c3e50; margin-bottom: 10px;">
+  UseFlow-FR
 </p>
 
-Addon Stremio de création de catalogues **Films** et **Documentaires** depuis des flux RSS, avec matching TMDB automatique et interface web de gestion.
+<p align="center" style="font-size: 18px; color: #555; margin-bottom: 20px;">
+  Addon Stremio pour créer des catalogues Films et Documentaires à partir de flux RSS, avec matching TMDB automatique et interface web de gestion.
+</p>
 
-Pour l’instant, seul un indexeur Usenet privé, soucieux de sa discrétion, est pleinement supporté. Je souhaite permettre à terme l'ajout d'autres flux RSS, certains peuvent déjà fonctionner, mais je ne peux garantir la fiabilité de l'outil.
-
+<p align="center" style="font-size: 16px; color: #666; margin-bottom: 30px;">
+  Pour l’instant, seul un indexeur Usenet privé, soucieux de sa discrétion, est pleinement supporté.  
+  D’autres flux RSS pourront être ajoutés à terme ; certains peuvent déjà fonctionner, mais leur fiabilité n’est pas garantie.
+</p>
 
 <p align="center">
   <img src="src/public/logo.png" alt="Logo UseFlow-FR" width="250">
