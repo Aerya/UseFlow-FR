@@ -24,7 +24,7 @@ Pour l’instant, seul un indexeur Usenet privé, soucieux de sa discrétion, es
 - ✅ **Dockerisé** : Déploiement facile avec Docker et docker-compose
 - ✅ **Recherche intégrée** : Recherche dans les catalogues depuis Stremio
 - ✅ **Historique de synchronisation** : Suivi détaillé de toutes les synchros
-
+Et c'est limité aux contenus disponibles en VF.
 
 ## Connexion à la WebUI
 
