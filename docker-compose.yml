@@ -6,11 +6,15 @@ services:
     ports:
       - "7973:7000"
     volumes:
+    # A adapter à votre configuration : /home/<votre_nom>/useflow-fr/data:/data
       - /home/aerya/docker/useflow-fr/data:/data
     environment:
       - PORT=7000
       - NODE_ENV=production
+      # C'est mieux de les modifier
       - WEBUI_USERNAME=admin
       - WEBUI_PASSWORD=admin
+      # Normalement à ne pas modifier
       - DB_PATH=/data/addon.db
-      - SESSION_SECRET=278f898a4fdbecc8cfd904646336d08a32c04afdad664bacdfc5b8334dfb6653 # à générer avec openssl rand -hex 32
+      # A générer avec openssl rand -hex 32
+      - SESSION_SECRET=278f898a4fdbecc8cfd904646336d08a32c04afdad664bacdfc5b8334dfb6653
