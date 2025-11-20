@@ -1,6 +1,4 @@
-<p align="center" style="font-size: 32px; font-weight: bold;">
-  UseFlow-FR
-</p>
+<h1 align="center">UseFlow-FR</h1>
 
 Addon Stremio de création de catalogues **Films** et **Documentaires** depuis des flux RSS, avec matching TMDB automatique et interface web de gestion.
 
