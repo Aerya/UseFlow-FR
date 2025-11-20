@@ -76,7 +76,7 @@ Tous les catalogues sont sauvegardés dans une base SQLite (`data/addon.db`). Le
 
 ## Licence
 
-MIT License - Fais-en ce que tu veux du moment que tu cites la source.
+License GNU GPL v3 - Merci notmment de citer la source.
 
 
 **Bon streaming :) 🍿**
