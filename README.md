@@ -9,6 +9,9 @@ Pour l’instant, seul un indexeur Usenet privé, soucieux de sa discrétion, es
   <img src="src/public/logo.png" alt="Logo UseFlow-FR" width="250">
 </p>
 
+## Article de blog avec screenshots
+[UseFlow-FR : mon addon de conversion de RSS en catalogues Stremio](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/)  
+
 
 ## Fonctionnalités
 

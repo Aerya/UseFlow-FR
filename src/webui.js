@@ -972,7 +972,7 @@ class WebUI {
       '                    <label for="discord_enhanced_notifications_enabled" style="margin: 0;">Afficher les 5 derniers ajouts de chaque catalogue</label>' +
       '                </div>' +
       '                <small style="color: #666; display: block; margin-top: 5px; margin-bottom: 15px;">' +
-      '                    Affiche les 5 dernières affiches avec lien TMDB intégré au titre' +
+      '                    Affiche les 5 dernières affiches' +
       '                </small>' +
       '                <div class="toggle-container">' +
       '                    <label class="toggle-switch">' +
