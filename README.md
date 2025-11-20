@@ -3,7 +3,8 @@
 </p>
 
 Addon Stremio de création de catalogues **Films** et **Documentaires** depuis des flux RSS, avec matching TMDB automatique et interface web de gestion.
-Pour l’instant, seul un indexeur Usenet privé est pleinement supporté. D’autres sources seront ajoutées prochainement.Les autres indexeurs peuvent fonctionner, mais je ne peux pas en garantir la fiabilité pour l’instant.
+
+Pour l’instant, seul un indexeur Usenet privé, soucieux de sa discrétion, est pleinement supporté. Je souhaite permettre à terme l'ajout d'autres flux RSS, certains peuvent déjà fonctionner, mais je ne peux garantir la fiabilité de l'outil.
 
 
 <p align="center">
