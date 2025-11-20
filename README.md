@@ -71,8 +71,8 @@ Tous les catalogues sont sauvegardés dans une base SQLite (`data/addon.db`). Le
 
 ### Pour le lancer
 
-Copier ou créer le docker-compose.yml
-```
+Copier ou créer [le docker-compose.yml](./docker-compose.yml)
+```yaml
 services:
   useflow-fr:
     image: ghcr.io/aerya/useflow-fr:latest
@@ -99,7 +99,7 @@ services:
 ```
 
 ### Idées en réflexion
-selon motivation et compétences de bibi
+Selon motivation et compétences de bibi
 
 - **Support des séries** : Prise en charge des flux RSS de séries TV
 - **Support multi-sources** : Compatibilité avec d'autres flux RSS films/documentaires
