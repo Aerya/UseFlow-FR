@@ -1,5 +1,5 @@
 <p align="center">
-  <strong>UseFlow-FR
+  <strong>UseFlow-FR  </strong>
 </p>
 
 Addon Stremio de création de catalogues **Films** et **Documentaires** depuis des flux RSS, avec matching TMDB automatique et interface web de gestion.
@@ -98,7 +98,8 @@ services:
 
 ```
 
-### Idées en réflexion, selon motivation et compétences de bibi
+### Idées en réflexion
+selon motivation et compétences de bibi
 
 - **Support des séries** : Prise en charge des flux RSS de séries TV
 - **Support multi-sources** : Compatibilité avec d'autres flux RSS films/documentaires
