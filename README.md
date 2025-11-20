@@ -7,7 +7,7 @@ Pour l’instant, seul un indexeur Usenet privé est pleinement supporté. D’a
 
 
 <p align="center">
-  <img src="src/public/logo.png" alt="Logo UseFlow-FR" width="150">
+  <img src="src/public/logo.png" alt="Logo UseFlow-FR" width="250">
 </p>
 
 
