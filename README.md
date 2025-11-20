@@ -2,7 +2,9 @@
 
 Addon Stremio de création de catalogues **Films** et **Documentaires** depuis des flux RSS, avec matching TMDB automatique et interface web de gestion.
 
-![Logo UseFlow-FR](src/public/logo.png)
+<p align="center">
+  <img src="src/public/logo.png" alt="Logo UseFlow-FR" width="150">
+</p>
 
 
 ## Fonctionnalités
@@ -23,16 +25,13 @@ Addon Stremio de création de catalogues **Films** et **Documentaires** depuis d
 
 ## Connexion à la WebUI
 
-- **Utilisateur par défaut**  : `admin`
-- **Mot de passe par défaut** : `admin`  
-Mais il est préférable de les adapter dans le docker-compose.yml  
-- **Secret Token par défaut** (sécurisation de cookie): `278f898a4fdbecc8cfd904646336d08a32c04afdad664bacdfc5b8334dfb6653`    
-Là encore, mieux de créer le vôtre avec `openssl rand -hex 32`
+- **Utilisateur et mot de passe** à adapter dans le docker-compose
+- **Secret Token** (sécurisation de cookie) à adapter dans le docker-compose avec `openssl rand -hex 32`
 
 
 ## Notes
 
-- La synchronisation peut prendre plusieurs minutes selon le nombre d'éléments dans les flux RSS,
+- La synchronisation peut prendre plusieurs minutes selon le nombre d'éléments dans les flux RSS, notamment la 1ère fois AVANT d'ajouter l'addon à Stremio,
 - Pour l'instant la limite de contenus est fixée à 10.000 items par catalogues,
 - Seuls les contenus avec un ID IMDB valide sont ajoutés aux catalogues (fonctionnement de Stremio).
 
