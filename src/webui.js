@@ -1010,7 +1010,7 @@ class WebUI {
       '        </div>' +
       '        <div class="section">' +
       '            <h2>Installation dans Stremio</h2>' +
-      '            <p>Une fois la 1ère synchronisation terminée, installer l\'addon dans Stremio avec cette URL :</p>' +
+      '            <p>Une fois la 1ère synchronisation terminée OU à chaque modification apportée sur la WebUI, (ré)installer l\'addon dans Stremio avec cette URL :</p>' +
       '            <div class="install-link">' +
       '                <code id="installUrl">Chargement...</code>' +
       '                <button class="btn" onclick="copyInstallUrl()" style="margin-left: 10px;">Copier</button>' +
