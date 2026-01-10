@@ -6,6 +6,7 @@ const RSSParser = require('./rss-parser');
 const TMDBMatcher = require('./tmdb-matcher');
 const StremioAddon = require('./addon');
 const WebUI = require('./webui');
+const { startTelemetry } = require('./telemetry');
 
 // Configuration
 const PORT = process.env.PORT || 7000;
@@ -26,6 +27,9 @@ const webui = new WebUI(db, rssParser, tmdbMatcher, stremioAddon);
 
 // Démarrer le serveur
 webui.listen(PORT);
+
+// Start anonymous telemetry (respects DO_NOT_TRACK)
+startTelemetry();
 
 // Gestion propre de l'arrêt
 process.on('SIGINT', () => {
