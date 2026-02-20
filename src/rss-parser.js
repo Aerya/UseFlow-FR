@@ -135,9 +135,57 @@ class RSSParser {
     return parsed;
   }
 
+  async parseAdditionalRSS() {
+    let additionalUrls = [];
+    try {
+      const raw = this.db.getConfig('rss_additional_urls');
+      if (raw) additionalUrls = JSON.parse(raw);
+    } catch (e) {
+      console.log('Error parsing rss_additional_urls:', e.message);
+      return [];
+    }
+
+    if (!Array.isArray(additionalUrls) || additionalUrls.length === 0) {
+      console.log('No additional RSS URLs configured');
+      return [];
+    }
+
+    const allParsed = [];
+    for (const rssUrl of additionalUrls) {
+      if (!rssUrl || !rssUrl.trim()) continue;
+      console.log('[RSS] Parsing additional feed:', rssUrl.substring(0, 50) + '...');
+
+      try {
+        const items = await this.fetchRSS(rssUrl.trim());
+
+        for (const item of items) {
+          const info = this.parseReleaseName(item.title);
+          const releaseId = typeof item.guid === 'object' && item.guid._ ? item.guid._ : (item.guid || item.link);
+
+          allParsed.push({
+            release_name: item.title,
+            indexer_rlz_id: releaseId,
+            cleanName: info.cleanName,
+            year: info.year,
+            catalog_type: info.isDoc ? 'documentaires' : 'films',
+            type: 'movie',
+            pubDate: item.pubDate
+          });
+        }
+      } catch (err) {
+        console.error('[RSS] Error parsing additional feed:', rssUrl.substring(0, 50), err.message);
+      }
+    }
+
+    return allParsed;
+  }
+
   async parseAll() {
+    const filmsItems = await this.parseFilmsRSS();
+    const additionalItems = await this.parseAdditionalRSS();
+
     const results = {
-      films: await this.parseFilmsRSS()
+      films: [...filmsItems, ...additionalItems]
     };
 
     return results;

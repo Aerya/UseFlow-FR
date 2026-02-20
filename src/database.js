@@ -86,6 +86,7 @@ class DatabaseManager {
   initDefaultConfig() {
     const defaults = {
       rss_films_url: '',
+      rss_additional_urls: '[]',
       tmdb_api_key: '',
       proxy_enabled: 'false',
       proxy_host: '',

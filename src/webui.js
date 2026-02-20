@@ -351,6 +351,7 @@ class WebUI {
       '            width: 100%;' +
       '            max-width: 400px;' +
       '            text-align: center;' +
+      '            position: relative;' +
       '        }' +
       '        .login-logo {' +
       '            width: 120px;' +
@@ -414,30 +415,50 @@ class WebUI {
       '            margin-top: 10px;' +
       '            font-size: 14px;' +
       '        }' +
+      '        .lang-select-login {' +
+      '            position: absolute;' +
+      '            top: 15px;' +
+      '            right: 15px;' +
+      '            padding: 6px 10px;' +
+      '            border: 2px solid #e0e0e0;' +
+      '            border-radius: 6px;' +
+      '            background: #f7fafc;' +
+      '            color: #333;' +
+      '            font-size: 13px;' +
+      '            cursor: pointer;' +
+      '        }' +
+      '        .lang-select-login:focus { outline: none; border-color: #667eea; }' +
       '    </style>' +
       '</head>' +
       '<body>' +
       '    <div class="login-container">' +
+      '        <select id="langSelect" class="lang-select-login" onchange="setLanguage(this.value)">' +
+      '            <option value="fr">🇫🇷 FR</option>' +
+      '            <option value="en">🇬🇧 EN</option>' +
+      '            <option value="de">🇩🇪 DE</option>' +
+      '        </select>' +
       '        <img src="/static/logo.png" alt="UseFlow-FR Logo" class="login-logo">' +
       '        <h1>UseFlow-FR</h1>' +
-      '        <p class="subtitle">Connexion à l\'interface d\'administration</p>' +
+      '        <p class="subtitle" data-i18n="login_subtitle">Connexion à l\'interface d\'administration</p>' +
       '' +
       '        <form id="loginForm">' +
       '            <div class="form-group">' +
-      '                <label for="username">Nom d\'utilisateur</label>' +
+      '                <label for="username" data-i18n="login_username">Nom d\'utilisateur</label>' +
       '                <input type="text" id="username" name="username" required autocomplete="username">' +
       '            </div>' +
       '' +
       '            <div class="form-group">' +
-      '                <label for="password">Mot de passe</label>' +
+      '                <label for="password" data-i18n="login_password">Mot de passe</label>' +
       '                <input type="password" id="password" name="password" required autocomplete="current-password">' +
       '            </div>' +
       '' +
-      '            <button type="submit">Se connecter</button>' +
+      '            <button type="submit" data-i18n="login_submit">Se connecter</button>' +
       '            <div id="error" class="error"></div>' +
       '        </form>' +
       '    </div>' +
+      '    <script src="/static/i18n.js"></script>' +
       '    <script>' +
+      '        document.addEventListener(\'DOMContentLoaded\', function() { initI18n(); });' +
       '        document.getElementById(\'loginForm\').addEventListener(\'submit\', async (e) => {' +
       '            e.preventDefault();' +
       '' +
@@ -457,10 +478,10 @@ class WebUI {
       '                if (response.ok) {' +
       '                    window.location.href = \'/dashboard\';' +
       '                } else {' +
-      '                    errorDiv.textContent = data.error || \'Erreur de connexion\';' +
+      '                    errorDiv.textContent = t(\'login_error_credentials\');' +
       '                }' +
       '            } catch (error) {' +
-      '                errorDiv.textContent = \'Erreur réseau\';' +
+      '                errorDiv.textContent = t(\'login_error_network\');' +
       '            }' +
       '        });' +
       '    </script>' +
@@ -797,6 +818,25 @@ class WebUI {
       '        .description-text a:hover {' +
       '            text-decoration: underline;' +
       '        }' +
+      '        .lang-select {' +
+      '            padding: 4px 6px;' +
+      '            background: var(--bg-tertiary);' +
+      '            color: var(--text-primary);' +
+      '            border: 2px solid var(--border-color);' +
+      '            border-radius: 6px;' +
+      '            cursor: pointer;' +
+      '            font-size: 12px;' +
+      '            transition: all 0.3s;' +
+      '            width: auto;' +
+      '            min-width: 0;' +
+      '        }' +
+      '        .lang-select:hover {' +
+      '            border-color: #667eea;' +
+      '        }' +
+      '        .lang-select:focus {' +
+      '            outline: none;' +
+      '            border-color: #667eea;' +
+      '        }' +
       '    </style>' +
       '</head>' +
       '<body>' +
@@ -809,106 +849,117 @@ class WebUI {
       '            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">' +
       '                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px; margin-right: 15px;">' +
       '                    <div style="display: flex; align-items: center; gap: 8px;">' +
-      '                        <p style="color: var(--text-secondary); font-size: 12px; margin: 0;">Par <strong style="color: #667eea;">Aerya</strong></p>' +
+      '                        <p style="color: var(--text-secondary); font-size: 12px; margin: 0;"><span data-i18n="by">Par</span> <strong style="color: #667eea;">Aerya</strong></p>' +
       '                        <img src="https://upandclear.org/wp-content/uploads/2024/06/Logo.detoure1.png.webp" alt="Aerya" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover;">' +
       '                    </div>' +
       '                    <div style="display: flex; gap: 15px;">' +
       '                        <a href="https://github.com/Aerya" target="_blank" style="color: #667eea; text-decoration: none; font-size: 12px; font-weight: 500;">GitHub</a>' +
       '                        <a href="https://upandclear.org/" target="_blank" style="color: #667eea; text-decoration: none; font-size: 12px; font-weight: 500;">Blog</a>' +
-      '                        <a href="https://ko-fi.com/upandclear" target="_blank" style="color: #667eea; text-decoration: none; font-size: 12px; font-weight: 500;">M\'offrir des Dragibus :-)</a>' +
+      '                        <a href="https://ko-fi.com/upandclear" target="_blank" style="color: #667eea; text-decoration: none; font-size: 12px; font-weight: 500;" data-i18n="donate">M\'offrir des Dragibus :-)</a>' +
       '                    </div>' +
       '                </div>' +
       '                <div class="header-actions">' +
+      '                    <select id="langSelect" class="lang-select" onchange="setLanguage(this.value)">' +
+      '                        <option value="fr">🇫🇷 FR</option>' +
+      '                        <option value="en">🇬🇧 EN</option>' +
+      '                        <option value="de">🇩🇪 DE</option>' +
+      '                    </select>' +
       '                    <div style="display: flex; align-items: center; gap: 5px;">' +
       '                        <button onclick="toggleTheme()" class="theme-toggle" id="themeToggleBtn">Ça va être tout noir !</button>' +
       '                        <a href="https://www.youtube.com/watch?v=wnSelKDe4sE" target="_blank" style="font-size: 10px; color: var(--text-secondary); text-decoration: none;" title="Référence RRrrrr">(?)</a>' +
       '                    </div>' +
       '                    <form action="/api/logout" method="POST" style="display: inline;">' +
-      '                        <button type="submit" class="logout-btn">Déconnexion</button>' +
+      '                        <button type="submit" class="logout-btn" data-i18n="logout">Déconnexion</button>' +
       '                    </form>' +
       '                </div>' +
       '            </div>' +
       '        </div>' +
       '        <div class="section" style="margin-bottom: 20px;">' +
-      '            <p class="description-text">' +
+      '            <p class="description-text" data-i18n="description_text" data-i18n-html="true">' +
       '                UseFlow-FR est un addon de création de catalogues Stremio à partir de flux RSS. Il ne permet pas de lire du contenu, il faut pour cela utiliser des addons de stream tels que <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> ou <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> avec <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>' +
       '                Tutoriels sur <a href="https://upandclear.org" target="_blank">mon blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">exemple de stack</a> à auto-héberger, <a href="https://stremiofr.com/" target="_blank">instances</a> mises à disposition par la communauté StremioFR.' +
       '            </p>' +
       '        </div>' +
       '        <div class="stats" id="stats">' +
       '            <div class="stat-card">' +
-      '                <h3>Films</h3>' +
+      '                <h3 data-i18n="stat_films">Films</h3>' +
       '                <div class="value">-</div>' +
       '            </div>' +
       '            <div class="stat-card">' +
-      '                <h3>Documentaires</h3>' +
+      '                <h3 data-i18n="stat_documentaires">Documentaires</h3>' +
       '                <div class="value">-</div>' +
       '            </div>' +
       '            <div class="stat-card">' +
-      '                <h3>Médias indexés</h3>' +
+      '                <h3 data-i18n="stat_indexed">Médias indexés</h3>' +
       '                <div class="value">-</div>' +
       '            </div>' +
       '        </div>' +
       '        <div class="section">' +
-      '            <h2>Historique des synchronisations</h2>' +
-      '            <p class="description-text">' +
+      '            <h2 data-i18n="sync_history_title">Historique des synchronisations</h2>' +
+      '            <p class="description-text" data-i18n="sync_history_desc" data-i18n-html="true">' +
       '                Pour chaque release, UseFlow-FR va chercher le média correspondant sur TMDB et l\'attribue ensuite à un catalogue Films ou Documentaires.<br>' +
       '                L\'écart entre les releases sources dans un flux RSS et les médias ajoutés dans les catalogues vient des releases qui n\'ont pas matché sur TMDB (nom erroné/différent de la fiche, pas de fiche, timeout TMDB, plusieurs médias du même nom etc) et de celles qui se réfèrent à un même média (rlz SD, HD, HDR, SDR, DV, UHD etc d\'un même film par exemple) et ne comptent donc pas.' +
       '                Si une nouvelle release concerne des média déjà rattaché à un catalogue, ce media n\'est alors pas remis en avant dans les derniers ajouts du catalogue.' +
       '            </p>' +
       '            <!-- Contrôles -->' +
       '            <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">' +
-      '            <label for="dateFilter" style="margin: 0;">Parcourir :</label>' +
+      '            <label for="dateFilter" style="margin: 0;" data-i18n="sync_browse">Parcourir :</label>' +
       '            <select id="dateFilter" style="width: auto; min-width: 200px; padding: 8px;" onchange="loadSyncHistoryByDate()">' +
-      '                <option value="">Les 3 dernières</option>' +
+      '                <option value="" data-i18n="sync_last_3">Les 3 dernières</option>' +
       '            </select>' +
       '            </div>' +
       '            <div id="syncHistoryContainer">' +
-      '                <p style="color: #666;">Chargement...</p>' +
+      '                <p style="color: #666;" data-i18n="sync_loading">Chargement...</p>' +
       '            </div>' +
       '        </div>' +
       '        <div class="section">' +
-      '            <h2>Configuration</h2>' +
-      '            <p class="description-text" style="margin-bottom: 20px; font-style: italic;">' +
+      '            <h2 data-i18n="config_title">Configuration</h2>' +
+      '            <p class="description-text" style="margin-bottom: 20px; font-style: italic;" data-i18n="config_note">' +
       '                Cet outil ne traite que les releases taggées FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ.' +
       '            </p>' +
       '            <form id="configForm">' +
       '                <div class="form-group">' +
-      '                    <label for="rss_films_url">Flux RSS de Films ou Documentaires</label>' +
+      '                    <label for="rss_films_url" data-i18n="config_rss_films">Flux RSS de Films ou Documentaires</label>' +
       '                    <input type="url" id="rss_films_url" name="rss_films_url" required placeholder="https://domain.tld/rssnew?cats=...&key=...">' +
-      '                    <small style="color: #666; display: block; margin-top: 5px;">' +
+      '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_rss_films_hint">' +
       '                        Incluant votre clé API ou passkey' +
       '                    </small>' +
       '                </div>' +
+      '                <div style="margin-top: 20px; margin-bottom: 10px;">' +
+      '                    <h3 data-i18n="config_rss_additional_title" style="margin: 0 0 5px 0;">Flux RSS additionnels</h3>' +
+      '                    <small style="color: #666; display: block; margin-bottom: 10px;" data-i18n="config_rss_additional_hint">Même fonctionnement que le flux principal : Films et Documentaires uniquement, basés sur TMDB (pas de séries).</small>' +
+      '                </div>' +
+      '                <div id="additionalRssContainer"></div>' +
+      '                <button type="button" class="btn" onclick="addRssField()" style="margin-bottom: 20px; background: linear-gradient(135deg, #48bb78, #38a169); font-size: 14px; padding: 8px 16px;" data-i18n="config_rss_add_btn">➕ Ajouter un flux RSS</button>' +
       '                <div class="form-group">' +
-      '                    <label for="tmdb_api_key">Clé API TMDB</label>' +
+      '                    <label for="tmdb_api_key" data-i18n="config_tmdb_key">Clé API TMDB</label>' +
       '                    <input type="text" id="tmdb_api_key" name="tmdb_api_key" required>' +
       '                </div>' +
       '                ' +
-      '                <h3 style="margin: 30px 0 15px 0;">Rating Poster DataBase aka RPDB</h3>' +
+      '                <h3 style="margin: 30px 0 15px 0;" data-i18n="config_rpdb_title">Rating Poster DataBase aka RPDB</h3>' +
       '                <div class="toggle-container">' +
       '                    <label class="toggle-switch">' +
       '                        <input type="checkbox" id="rpdb_enabled" name="rpdb_enabled">' +
       '                        <span class="slider"></span>' +
       '                    </label>' +
-      '                    <label for="rpdb_enabled" style="margin: 0;">Activer (<a href="https://ratingposterdb.com/examples/" target="_blank">exemples</a>)</label>' +
+      '                    <label for="rpdb_enabled" style="margin: 0;"><span data-i18n="config_rpdb_enable">Activer</span> (<a href="https://ratingposterdb.com/examples/" target="_blank" data-i18n="config_rpdb_examples">exemples</a>)</label>' +
       '                </div>' +
       '                <div class="form-group">' +
-      '                    <label for="rpdb_api_key"><a href="https://ratingposterdb.com/api-key/" target="_blank">Obtenir une clé gratuite en créant un compte</a></label>' +
-      '                    <input type="text" id="rpdb_api_key" name="rpdb_api_key" placeholder="Votre clé API RPDB">' +
+      '                    <label for="rpdb_api_key"><a href="https://ratingposterdb.com/api-key/" target="_blank" data-i18n="config_rpdb_get_key">Obtenir une clé gratuite en créant un compte</a></label>' +
+      '                    <input type="text" id="rpdb_api_key" name="rpdb_api_key" data-i18n="config_rpdb_placeholder" data-i18n-placeholder="true" placeholder="Votre clé API RPDB">' +
       '                </div>' +
       '' +
-      '                <h3 style="margin: 30px 0 15px 0;">Proxy</h3>' +
+      '                <h3 style="margin: 30px 0 15px 0;" data-i18n="config_proxy_title">Proxy</h3>' +
       '' +
       '                <div class="toggle-container">' +
       '                    <label class="toggle-switch">' +
       '                        <input type="checkbox" id="proxy_enabled" name="proxy_enabled">' +
       '                        <span class="slider"></span>' +
       '                    </label>' +
-      '                    <label for="proxy_enabled" style="margin: 0;">Activer</label>' +
+      '                    <label for="proxy_enabled" style="margin: 0;" data-i18n="config_proxy_enable">Activer</label>' +
       '                </div>' +
       '                <div class="form-group">' +
-      '                    <label for="proxy_protocol">Protocole</label>' +
+      '                    <label for="proxy_protocol" data-i18n="config_proxy_protocol">Protocole</label>' +
       '                    <select id="proxy_protocol" name="proxy_protocol">' +
       '                        <option value="http">HTTP</option>' +
       '                        <option value="https">HTTPS</option>' +
@@ -917,50 +968,50 @@ class WebUI {
       '                    </select>' +
       '                </div>' +
       '                <div class="form-group">' +
-      '                    <label for="proxy_host">Hôte</label>' +
+      '                    <label for="proxy_host" data-i18n="config_proxy_host">Hôte</label>' +
       '                    <input type="text" id="proxy_host" name="proxy_host" placeholder="127.0.0.1">' +
       '                </div>' +
       '                <div class="form-group">' +
-      '                    <label for="proxy_port">Port</label>' +
+      '                    <label for="proxy_port" data-i18n="config_proxy_port">Port</label>' +
       '                    <input type="number" id="proxy_port" name="proxy_port" placeholder="1080">' +
       '                </div>' +
       '                <div class="form-group">' +
-      '                    <label for="proxy_username">Utilisateur (optionnel)</label>' +
+      '                    <label for="proxy_username" data-i18n="config_proxy_username">Utilisateur (optionnel)</label>' +
       '                    <input type="text" id="proxy_username" name="proxy_username">' +
       '                </div>' +
       '                <div class="form-group">' +
-      '                    <label for="proxy_password">Mot de passe (optionnel)</label>' +
+      '                    <label for="proxy_password" data-i18n="config_proxy_password">Mot de passe (optionnel)</label>' +
       '                    <input type="password" id="proxy_password" name="proxy_password">' +
       '                </div>' +
-      '                <h3 style="margin: 30px 0 15px 0;">Synchronisation automatique</h3>' +
+      '                <h3 style="margin: 30px 0 15px 0;" data-i18n="config_auto_sync_title">Synchronisation automatique</h3>' +
       '' +
       '                <div class="toggle-container">' +
       '                    <label class="toggle-switch">' +
       '                        <input type="checkbox" id="auto_refresh_enabled" name="auto_refresh_enabled">' +
       '                        <span class="slider"></span>' +
       '                    </label>' +
-      '                    <label for="auto_refresh_enabled" style="margin: 0;">Activer</label>' +
+      '                    <label for="auto_refresh_enabled" style="margin: 0;" data-i18n="config_auto_sync_enable">Activer</label>' +
       '                </div>' +
       '                <div class="form-group">' +
-      '                    <label for="refresh_interval">Intervalle de rafraîchissement (minutes)</label>' +
+      '                    <label for="refresh_interval" data-i18n="config_refresh_interval">Intervalle de rafraîchissement (minutes)</label>' +
       '                    <input type="number" id="refresh_interval" name="refresh_interval" min="15" max="1440" value="180" placeholder="180">' +
-      '                    <small style="color: #666; display: block; margin-top: 5px;">' +
+      '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_refresh_hint">' +
       '                        Minimum : 15 minutes | Maximum : 1440 minutes (24h) | Par défaut : 180 minutes (3h)' +
       '                    </small>' +
       '                </div>' +
-      '                <h3 style="margin: 30px 0 15px 0;">Notifications Discord à la suite d\'une synchronisation</h3>' +
+      '                <h3 style="margin: 30px 0 15px 0;" data-i18n="config_discord_title">Notifications Discord à la suite d\'une synchronisation</h3>' +
       '' +
       '                <div class="toggle-container">' +
       '                    <label class="toggle-switch">' +
       '                        <input type="checkbox" id="discord_notifications_enabled" name="discord_notifications_enabled">' +
       '                        <span class="slider"></span>' +
       '                    </label>' +
-      '                    <label for="discord_notifications_enabled" style="margin: 0;">Activer</label>' +
+      '                    <label for="discord_notifications_enabled" style="margin: 0;" data-i18n="config_discord_enable">Activer</label>' +
       '                </div>' +
       '                <div class="form-group">' +
-      '                    <label for="discord_webhook_url">Webhook</label>' +
+      '                    <label for="discord_webhook_url" data-i18n="config_discord_webhook">Webhook</label>' +
       '                    <input type="url" id="discord_webhook_url" name="discord_webhook_url" placeholder="https://discord.com/api/webhooks/...">' +
-      '                    <small style="color: #666; display: block; margin-top: 5px;">' +
+      '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_discord_webhook_hint">' +
       '                        Créer un webhook dans Paramètres du serveur > Intégrations > Webhooks' +
       '                    </small>' +
       '                </div>' +
@@ -969,9 +1020,9 @@ class WebUI {
       '                        <input type="checkbox" id="discord_enhanced_notifications_enabled" name="discord_enhanced_notifications_enabled">' +
       '                        <span class="slider"></span>' +
       '                    </label>' +
-      '                    <label for="discord_enhanced_notifications_enabled" style="margin: 0;">Afficher les 5 derniers ajouts de chaque catalogue</label>' +
+      '                    <label for="discord_enhanced_notifications_enabled" style="margin: 0;" data-i18n="config_discord_enhanced">Afficher les 5 derniers ajouts de chaque catalogue</label>' +
       '                </div>' +
-      '                <small style="color: #666; display: block; margin-top: 5px; margin-bottom: 15px;">' +
+      '                <small style="color: #666; display: block; margin-top: 5px; margin-bottom: 15px;" data-i18n="config_discord_enhanced_hint">' +
       '                    Affiche les 5 dernières affiches' +
       '                </small>' +
       '                <div class="toggle-container">' +
@@ -979,27 +1030,27 @@ class WebUI {
       '                        <input type="checkbox" id="discord_rpdb_posters_enabled" name="discord_rpdb_posters_enabled">' +
       '                        <span class="slider"></span>' +
       '                    </label>' +
-      '                    <label for="discord_rpdb_posters_enabled" style="margin: 0;">Utiliser les affiches RPDB pour Discord</label>' +
+      '                    <label for="discord_rpdb_posters_enabled" style="margin: 0;" data-i18n="config_discord_rpdb">Utiliser les affiches RPDB pour Discord</label>' +
       '                </div>' +
-      '                <small style="color: #666; display: block; margin-top: 5px; margin-bottom: 15px;">' +
+      '                <small style="color: #666; display: block; margin-top: 5px; margin-bottom: 15px;" data-i18n="config_discord_rpdb_hint">' +
       '                    Nécessite une clé API RPDB configurée' +
       '                </small>' +
-      '                <button type="submit" class="btn">Enregistrer</button>' +
+      '                <button type="submit" class="btn" data-i18n="config_save">Enregistrer</button>' +
       '                <div id="configMessage"></div>' +
       '            </form>' +
       '        </div>' +
       '        <div class="section">' +
-      '            <h2>Synchronisation</h2>' +
+      '            <h2 data-i18n="sync_title">Synchronisation</h2>' +
       '            <div id="autoRefreshStatus" style="background: #f7fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">' +
-      '                <strong>Synchronisation automatique :</strong> <span id="autoRefreshState">Chargement...</span>' +
+      '                <strong data-i18n="sync_auto_label">Synchronisation automatique :</strong> <span id="autoRefreshState" data-i18n="sync_loading">Chargement...</span>' +
       '            </div>' +
       '' +
       '            <div style="text-align: center;">' +
-      '                <button class="btn btn-success" onclick="startSync()">▶️ Lancer manuellement la récupération des flux RSS et le matching avec TMDB</button>' +
+      '                <button class="btn btn-success" onclick="startSync()" data-i18n="sync_start_btn">▶️ Lancer manuellement la récupération des flux RSS et le matching avec TMDB</button>' +
       '            </div>' +
       '' +
       '            <div id="syncStatus" class="sync-status" style="display: none;">' +
-      '                <h3 id="syncStage">En cours...</h3>' +
+      '                <h3 id="syncStage" data-i18n="sync_in_progress">En cours...</h3>' +
       '                <div class="progress-bar">' +
       '                    <div class="progress-fill" id="progressFill" style="width: 0%;">' +
       '                        <span id="progressText">0%</span>' +
@@ -1009,14 +1060,15 @@ class WebUI {
       '            </div>' +
       '        </div>' +
       '        <div class="section">' +
-      '            <h2>Installation dans Stremio</h2>' +
-      '            <p>Une fois la 1ère synchronisation terminée OU à chaque modification apportée sur la WebUI, (ré)installer l\'addon dans Stremio avec cette URL :</p>' +
+      '            <h2 data-i18n="install_title">Installation dans Stremio</h2>' +
+      '            <p data-i18n="install_desc">Une fois la 1ère synchronisation terminée OU à chaque modification apportée sur la WebUI, (ré)installer l\'addon dans Stremio avec cette URL :</p>' +
       '            <div class="install-link">' +
-      '                <code id="installUrl">Chargement...</code>' +
-      '                <button class="btn" onclick="copyInstallUrl()" style="margin-left: 10px;">Copier</button>' +
+      '                <code id="installUrl" data-i18n="install_loading">Chargement...</code>' +
+      '                <button class="btn" onclick="copyInstallUrl()" style="margin-left: 10px;" data-i18n="install_copy">Copier</button>' +
       '            </div>' +
       '        </div>' +
       '    </div>' +
+      '    <script src="/static/i18n.js"></script>' +
       '    <script src="/static/dashboard.js"></script>' +
       '</body>' +
       '</html>';

@@ -11,7 +11,7 @@ window.copyInstallUrl = function () {
     // Modern API
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(urlToCopy).then(function () {
-            alert('URL copiée !');
+            alert(t('install_copied'));
         }).catch(function (err) {
             console.error('Async: Could not copy text: ', err);
             fallbackCopyTextToClipboard(urlToCopy);
@@ -37,16 +37,66 @@ function fallbackCopyTextToClipboard(text) {
     try {
         var successful = document.execCommand('copy');
         if (successful) {
-            alert('URL copiée !');
+            alert(t('install_copied'));
         } else {
-            alert('Erreur lors de la copie (fallback)');
+            alert(t('install_copy_error'));
         }
     } catch (err) {
         console.error('Fallback: Oops, unable to copy', err);
-        alert('Erreur lors de la copie :(');
+        alert(t('install_copy_error'));
     }
 
     document.body.removeChild(textArea);
+}
+
+// ====== Dynamic RSS Feed Fields ======
+
+let rssFieldCounter = 0;
+
+function addRssField(value) {
+    rssFieldCounter++;
+    const container = document.getElementById('additionalRssContainer');
+    if (!container) return;
+
+    const row = document.createElement('div');
+    row.className = 'form-group';
+    row.style.display = 'flex';
+    row.style.gap = '10px';
+    row.style.alignItems = 'center';
+    row.id = 'rss-field-' + rssFieldCounter;
+
+    const input = document.createElement('input');
+    input.type = 'url';
+    input.className = 'additional-rss-url';
+    input.placeholder = 'https://domain.tld/rssnew?cats=...&key=...';
+    input.style.flex = '1';
+    if (value) input.value = value;
+
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.textContent = t('config_rss_remove_btn');
+    removeBtn.style.cssText = 'background: #e53e3e; color: white; border: none; border-radius: 6px; padding: 8px 14px; cursor: pointer; font-size: 13px; white-space: nowrap;';
+    removeBtn.onclick = function () { row.remove(); };
+
+    row.appendChild(input);
+    row.appendChild(removeBtn);
+    container.appendChild(row);
+}
+
+function removeRssField(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+}
+
+function getAdditionalRssUrls() {
+    const inputs = document.querySelectorAll('.additional-rss-url');
+    const urls = [];
+    inputs.forEach(input => {
+        if (input.value && input.value.trim()) {
+            urls.push(input.value.trim());
+        }
+    });
+    return urls;
 }
 
 window.toggleTheme = function () {
@@ -75,10 +125,10 @@ window.startSync = async function () {
                 window.syncInterval = setInterval(checkSyncStatus, 2000);
             }
         } else {
-            alert('Erreur: ' + data.error);
+            alert(t('sync_error_label') + ': ' + data.error);
         }
     } catch (error) {
-        alert('Erreur réseau');
+        alert(t('config_error_network'));
     }
 };
 
@@ -123,6 +173,23 @@ async function loadConfig() {
             }
         }
 
+        // Populate additional RSS fields
+        if (config.rss_additional_urls) {
+            try {
+                const urls = JSON.parse(config.rss_additional_urls);
+                const container = document.getElementById('additionalRssContainer');
+                if (container) container.innerHTML = '';
+                rssFieldCounter = 0;
+                if (Array.isArray(urls)) {
+                    urls.forEach(url => {
+                        if (url && url.trim()) addRssField(url);
+                    });
+                }
+            } catch (e) {
+                console.error('Error parsing rss_additional_urls:', e);
+            }
+        }
+
         updateAutoRefreshStatus(config);
     } catch (error) {
         console.error('Error loading config:', error);
@@ -136,9 +203,9 @@ function updateAutoRefreshStatus(config) {
 
     if (statusSpan) {
         if (enabled) {
-            statusSpan.innerHTML = '<span style="color: #48bb78;">✓ Activée (toutes les ' + interval + ' minutes)</span>';
+            statusSpan.innerHTML = '<span style="color: #48bb78;">' + t('sync_auto_enabled').replace('{interval}', interval) + '</span>';
         } else {
-            statusSpan.innerHTML = '<span style="color: #e53e3e;">✗ Désactivée (synchronisation manuelle uniquement)</span>';
+            statusSpan.innerHTML = '<span style="color: #e53e3e;">' + t('sync_auto_disabled') + '</span>';
         }
     }
 }
@@ -155,7 +222,7 @@ async function checkSyncStatus() {
         }
 
         const syncStageEl = document.getElementById('syncStage');
-        if (syncStageEl) syncStageEl.textContent = status.stage || 'En attente';
+        if (syncStageEl) syncStageEl.textContent = status.stage || t('sync_waiting');
 
         if (status.total > 0) {
             const percent = Math.round((status.progress / status.total) * 100);
@@ -165,7 +232,7 @@ async function checkSyncStatus() {
 
             if (fill) fill.style.width = percent + '%';
             if (text) text.textContent = percent + '%';
-            if (details) details.textContent = 'Progression: ' + status.progress + '/' + status.total + ' | Matchées: ' + status.matched + ' | Non traitées: ' + status.failed;
+            if (details) details.textContent = t('sync_progress') + ': ' + status.progress + '/' + status.total + ' | ' + t('sync_matched_label') + ': ' + status.matched + ' | ' + t('sync_unprocessed') + ': ' + status.failed;
         }
 
         if (status.completed || status.error) {
@@ -173,7 +240,7 @@ async function checkSyncStatus() {
             const text = document.getElementById('progressText');
 
             if (fill) fill.style.width = '100%';
-            if (text) text.textContent = status.error ? 'Erreur' : '✓ Terminée';
+            if (text) text.textContent = status.error ? t('sync_error') : t('sync_completed');
 
             setTimeout(loadSyncHistory, 1000);
         }
@@ -191,7 +258,7 @@ async function loadSyncHistory() {
         if (!container) return;
 
         if (history.length === 0) {
-            container.innerHTML = '<p style="color: #666;">Aucune synchronisation effectuée pour le moment.</p>';
+            container.innerHTML = '<p style="color: #666;">' + t('sync_none') + '</p>';
             return;
         }
 
@@ -199,49 +266,49 @@ async function loadSyncHistory() {
             const startDate = new Date(sync.started_at);
             const duration = sync.finished_at ? Math.round((sync.finished_at - sync.started_at) / 1000) : 0;
             const statusClass = sync.status === 'error' ? 'error' : (sync.status === 'running' ? 'running' : '');
-            const statusText = sync.status === 'completed' ? '✓ Terminée' : (sync.status === 'error' ? '✗ Erreur' : '⏳ En cours');
+            const statusText = sync.status === 'completed' ? t('sync_completed') : (sync.status === 'error' ? t('sync_error') : t('sync_running'));
             const matchRate = sync.total_items > 0 ? Math.round((sync.matched_items / sync.total_items) * 100) : 0;
             const newItems = (sync.matched_items - (sync.already_in_db || 0));
 
             return `
             <div class="history-item ${statusClass}">
                 <div class="history-meta">
-                    <strong>${startDate.toLocaleString('fr-FR')}</strong> | 
-                    Durée: ${duration}s | 
-                    Statut: <strong>${statusText}</strong>
-                    ${sync.error_message ? '<br><span style="color: #e53e3e;">Erreur: ' + sync.error_message + '</span>' : ''}
+                    <strong>${startDate.toLocaleString()}</strong> | 
+                    ${t('sync_duration')}: ${duration}s | 
+                    ${t('sync_status')}: <strong>${statusText}</strong>
+                    ${sync.error_message ? '<br><span style="color: #e53e3e;">' + t('sync_error_label') + ': ' + sync.error_message + '</span>' : ''}
                 </div>
                 <div class="history-stats">
                     <div class="history-stat">
-                        <div class="history-stat-label">Releases sources</div>
+                        <div class="history-stat-label">${t('sync_releases')}</div>
                         <div class="history-stat-value">${sync.total_items}</div>
                     </div>
                     <div class="history-stat">
-                        <div class="history-stat-label">Matchées sur TMDB</div>
+                        <div class="history-stat-label">${t('sync_matched')}</div>
                         <div class="history-stat-value" style="color: #48bb78;">${sync.matched_items}</div>
                     </div>
                     <div class="history-stat">
-                        <div class="history-stat-label">Réussite</div>
+                        <div class="history-stat-label">${t('sync_match_rate')}</div>
                         <div class="history-stat-value">${matchRate}%</div>
                     </div>
                     <div class="history-stat">
-                        <div class="history-stat-label">Déjà en base</div>
+                        <div class="history-stat-label">${t('sync_already_in_db')}</div>
                         <div class="history-stat-value" style="color: #718096;">${sync.already_in_db || 0}</div>
                     </div>
                     <div class="history-stat">
-                        <div class="history-stat-label">Nouvelles</div>
+                        <div class="history-stat-label">${t('sync_new')}</div>
                         <div class="history-stat-value" style="color: #8b5cf6;">${newItems}</div>
                     </div>
                     <div class="history-stat">
-                        <div class="history-stat-label">Films</div>
+                        <div class="history-stat-label">${t('sync_films')}</div>
                         <div class="history-stat-value" style="color: #667eea;">+${sync.films_added}</div>
                     </div>
                     <div class="history-stat">
-                        <div class="history-stat-label">Docs</div>
+                        <div class="history-stat-label">${t('sync_docs')}</div>
                         <div class="history-stat-value" style="color: #667eea;">+${sync.documentaires_added}</div>
                     </div>
                     <div class="history-stat">
-                        <div class="history-stat-label">Non traitées</div>
+                        <div class="history-stat-label">${t('sync_failed')}</div>
                         <div class="history-stat-value" style="color: #e53e3e;">${sync.failed_items}</div>
                     </div>
                 </div>
@@ -295,7 +362,7 @@ window.loadSyncHistoryByDate = async function () {
         if (!container) return;
 
         if (history.length === 0) {
-            container.innerHTML = '<p style="color: #666;">Aucune synchronisation pour cette date.</p>';
+            container.innerHTML = '<p style="color: #666;">' + t('sync_none_date') + '</p>';
             return;
         }
 
@@ -317,49 +384,49 @@ function renderSyncHistoryItem(sync) {
     const startDate = new Date(sync.started_at);
     const duration = sync.finished_at ? Math.round((sync.finished_at - sync.started_at) / 1000) : 0;
     const statusClass = sync.status === 'error' ? 'error' : (sync.status === 'running' ? 'running' : '');
-    const statusText = sync.status === 'completed' ? '✓ Terminée' : (sync.status === 'error' ? '✗ Erreur' : '⏳ En cours');
+    const statusText = sync.status === 'completed' ? t('sync_completed') : (sync.status === 'error' ? t('sync_error') : t('sync_running'));
     const matchRate = sync.total_items > 0 ? Math.round((sync.matched_items / sync.total_items) * 100) : 0;
     const newItems = (sync.matched_items - (sync.already_in_db || 0));
 
     return `
     <div class="history-item ${statusClass}">
         <div class="history-meta">
-            <strong>${startDate.toLocaleString('fr-FR')}</strong> | 
-            Durée: ${duration}s | 
-            Statut: <strong>${statusText}</strong>
-            ${sync.error_message ? '<br><span style="color: #e53e3e;">Erreur: ' + sync.error_message + '</span>' : ''}
+            <strong>${startDate.toLocaleString()}</strong> | 
+            ${t('sync_duration')}: ${duration}s | 
+            ${t('sync_status')}: <strong>${statusText}</strong>
+            ${sync.error_message ? '<br><span style="color: #e53e3e;">' + t('sync_error_label') + ': ' + sync.error_message + '</span>' : ''}
         </div>
         <div class="history-stats">
             <div class="history-stat">
-                <div class="history-stat-label">Releases sources</div>
+                <div class="history-stat-label">${t('sync_releases')}</div>
                 <div class="history-stat-value">${sync.total_items}</div>
             </div>
             <div class="history-stat">
-                <div class="history-stat-label">Matchées</div>
+                <div class="history-stat-label">${t('sync_matched')}</div>
                 <div class="history-stat-value" style="color: #48bb78;">${sync.matched_items}</div>
             </div>
             <div class="history-stat">
-                <div class="history-stat-label">Réussite</div>
+                <div class="history-stat-label">${t('sync_match_rate')}</div>
                 <div class="history-stat-value">${matchRate}%</div>
             </div>
             <div class="history-stat">
-                <div class="history-stat-label">Déjà en base</div>
+                <div class="history-stat-label">${t('sync_already_in_db')}</div>
                 <div class="history-stat-value" style="color: #718096;">${sync.already_in_db || 0}</div>
             </div>
             <div class="history-stat">
-                <div class="history-stat-label">Nouvelles</div>
+                <div class="history-stat-label">${t('sync_new')}</div>
                 <div class="history-stat-value" style="color: #8b5cf6;">${newItems}</div>
             </div>
             <div class="history-stat">
-                <div class="history-stat-label">Films</div>
+                <div class="history-stat-label">${t('sync_films')}</div>
                 <div class="history-stat-value" style="color: #667eea;">+${sync.films_added}</div>
             </div>
             <div class="history-stat">
-                <div class="history-stat-label">Docs</div>
+                <div class="history-stat-label">${t('sync_docs')}</div>
                 <div class="history-stat-value" style="color: #667eea;">+${sync.documentaires_added}</div>
             </div>
             <div class="history-stat">
-                <div class="history-stat-label">Non traitées</div>
+                <div class="history-stat-label">${t('sync_failed')}</div>
                 <div class="history-stat-value" style="color: #e53e3e;">${sync.failed_items}</div>
             </div>
         </div>
@@ -386,6 +453,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btn) {
             btn.textContent = currentTheme === 'dark' ? 'Ta gueule !' : 'Ça va être tout noir !';
         }
+        // Init i18n
+        initI18n();
     } catch (e) {
         console.error('Theme init error:', e);
     }
@@ -424,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'discord_enhanced_notifications_enabled',
                 'discord_rpdb_posters_enabled'
             ];
-            
+
             checkboxes.forEach(id => {
                 const checkbox = document.getElementById(id);
                 if (checkbox) {
@@ -432,6 +501,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log(`[Config] ${id}: ${config[id]}`);
                 }
             });
+
+            // Collect additional RSS URLs as JSON array
+            config.rss_additional_urls = JSON.stringify(getAdditionalRssUrls());
 
             try {
                 const response = await fetch('/api/config', {
@@ -445,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     msg.className = 'success';
-                    msg.textContent = '✓ Configuration sauvegardée';
+                    msg.textContent = t('config_saved');
                     setTimeout(() => msg.textContent = '', 3000);
                     loadConfig();
                 } else {
@@ -456,7 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const msg = document.getElementById('configMessage');
                 if (msg) {
                     msg.className = 'error';
-                    msg.textContent = '✗ Erreur réseau';
+                    msg.textContent = t('config_error_network');
                 }
             }
         });

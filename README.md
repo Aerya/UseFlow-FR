@@ -1,8 +1,12 @@
 <h1 align="center">UseFlow-FR</h1>
 
+<p align="center">
+  <a href="./README.en.md">🇬🇧 English</a> · <a href="./README.de.md">🇩🇪 Deutsch</a>
+</p>
+
 Addon Stremio de création de catalogues **Films** et **Documentaires** depuis des flux RSS, avec matching TMDB automatique et interface web de gestion.
 
-Pour l’instant, seul un indexeur Usenet privé, soucieux de sa discrétion, est pleinement supporté. Je souhaite intégrer à terme l'ajout d'autres flux RSS, certains peuvent déjà fonctionner mais je ne peux garantir la fiabilité de l'outil.
+Pour l'instant, seul un indexeur Usenet privé, soucieux de sa discrétion, est pleinement supporté. Je souhaite intégrer à terme l'ajout d'autres flux RSS, certains peuvent déjà fonctionner mais je ne peux garantir la fiabilité de l'outil.
 
 
 <p align="center">
@@ -20,6 +24,8 @@ Pour l’instant, seul un indexeur Usenet privé, soucieux de sa discrétion, es
 - ✅ **Support RPDB** : Affiches personnalisées avec Rating Poster Database (optionnel)
 - ✅ **Support des IDs IMDB** : Compatible avec tous les addons de streaming Stremio
 - ✅ **WebUI complète** : Interface d'administration moderne avec authentification
+- ✅ **Internationalisation** : Interface disponible en 🇫🇷 Français, 🇬🇧 English et 🇩🇪 Deutsch
+- ✅ **Flux RSS multiples** : Ajoutez autant de flux RSS que nécessaire
 - ✅ **Notifications Discord** : Alertes de synchronisation avec galerie d'affiches (optionnel)
 - ✅ **Gestion du proxy** : Support HTTP/HTTPS/SOCKS4/SOCKS5 avec ou sans authentification (optionnel)
 - ✅ **Sauvegarde persistante** : Base de données SQLite avec tous les catalogues et incrémentation des contenus (ils s'ajoutent et ne se remplacent pas)
@@ -105,14 +111,13 @@ services:
 Selon motivation et compétences de bibi
 
 - **Support des séries** : Prise en charge des flux RSS de séries TV
-- **Support multi-sources** : Compatibilité avec d'autres flux RSS films/documentaires
 - **Filtrage par genres** : Pour étoffer un peu la recherche
 - **Statistiques avancées** : Graphiques catalogues/sources
 
 
 ## Licence
 
-License GNU GPL v3 - Merci notmment de citer la source.
+License GNU GPL v3 - Merci notamment de citer la source.
 
 
 **Bon streaming :) 🍿**
