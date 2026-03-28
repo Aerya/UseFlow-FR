@@ -889,7 +889,7 @@ class WebUI {
       '        <div class="section" style="margin-bottom: 20px;">' +
       '            <p class="description-text" data-i18n="description_text" data-i18n-html="true">' +
       '                Stremio RSS Catalog est un addon de création de catalogues Stremio à partir de flux RSS. Il ne permet pas de lire du contenu, il faut pour cela utiliser des addons de stream tels que <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> ou <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> avec <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>' +
-      '                Tutoriels sur <a href="https://upandclear.org" target="_blank">mon blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">exemple de stack</a> à auto-héberger, <a href="https://stremiofr.com/" target="_blank">instances</a> mises à disposition par la communauté StremioFR.' +
+      '                Tutoriels sur <a href="https://upandclear.org" target="_blank">mon blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">exemple de stack</a> à auto-héberger, <a href="https://stremiofr.me/" target="_blank">instances</a> mises à disposition par la communauté StremioFR.' +
       '            </p>' +
       '        </div>' +
       '        <div class="stats" id="stats">' +
@@ -936,7 +936,7 @@ class WebUI {
       '            </p>' +
       '            <form id="configForm">' +
       '                <div class="form-group">' +
-      '                    <label for="rss_films_url" data-i18n="config_rss_films">Flux RSS de Films ou Documentaires</label>' +
+      '                    <label for="rss_films_url" data-i18n="config_rss_films">Flux RSS</label>' +
       '                    <input type="url" id="rss_films_url" name="rss_films_url" required placeholder="https://domain.tld/rssnew?cats=...&key=...">' +
       '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_rss_films_hint">' +
       '                        Incluant votre clé API ou passkey' +

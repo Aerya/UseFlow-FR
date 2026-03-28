@@ -18,7 +18,7 @@ const translations = {
     logout: "Déconnexion",
 
     // Description
-    description_text: 'Stremio RSS Catalog est un addon de création de catalogues Stremio à partir de flux RSS. Il ne permet pas de lire du contenu, il faut pour cela utiliser des addons de stream tels que <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> ou <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> avec <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Tutoriels sur <a href="https://upandclear.org" target="_blank">mon blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">exemple de stack</a> à auto-héberger, <a href="https://stremiofr.com/" target="_blank">instances</a> mises à disposition par la communauté StremioFR.',
+    description_text: 'Stremio RSS Catalog est un addon de création de catalogues Stremio à partir de flux RSS. Il ne permet pas de lire du contenu, il faut pour cela utiliser des addons de stream tels que <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> ou <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> avec <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Tutoriels sur <a href="https://upandclear.org" target="_blank">mon blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">exemple de stack</a> à auto-héberger, <a href="https://stremiofr.me/" target="_blank">instances</a> mises à disposition par la communauté StremioFR.',
 
     // Stats
     stat_films: "Films",
@@ -53,7 +53,7 @@ const translations = {
     // Config
     config_title: "Configuration",
     config_note: "Cet outil ne traite que les releases taggées FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ.",
-    config_rss_films: "Flux RSS de Films, Documentaires ou Séries",
+    config_rss_films: "Flux RSS",
     config_rss_films_hint: "Incluant votre clé API ou passkey",
     config_rss_additional_title: "Flux RSS additionnels",
     config_rss_additional_hint: "Même fonctionnement que le flux principal : Films, Documentaires et Séries détectés automatiquement.",
@@ -127,7 +127,7 @@ const translations = {
     logout: "Logout",
 
     // Description
-    description_text: 'Stremio RSS Catalog is a Stremio catalog creation addon from RSS feeds. It does not play content; for that, use streaming addons such as <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> or <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> with <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Tutorials on <a href="https://upandclear.org" target="_blank">my blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">stack example</a> to self-host, <a href="https://stremiofr.com/" target="_blank">instances</a> shared by the StremioFR community.',
+    description_text: 'Stremio RSS Catalog is a Stremio catalog creation addon from RSS feeds. It does not play content; for that, use streaming addons such as <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> or <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> with <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Tutorials on <a href="https://upandclear.org" target="_blank">my blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">stack example</a> to self-host, <a href="https://stremiofr.me/" target="_blank">instances</a> shared by the StremioFR community.',
 
     // Stats
     stat_films: "Movies",
@@ -162,7 +162,7 @@ const translations = {
     // Config
     config_title: "Configuration",
     config_note: "This tool only processes releases tagged FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ.",
-    config_rss_films: "Movies, Documentaries or Series RSS Feed",
+    config_rss_films: "RSS Feed",
     config_rss_films_hint: "Including your API key or passkey",
     config_rss_additional_title: "Additional RSS Feeds",
     config_rss_additional_hint: "Same behavior as the main feed: Movies, Documentaries and Series detected automatically.",
@@ -236,7 +236,7 @@ const translations = {
     logout: "Abmelden",
 
     // Description
-    description_text: 'Stremio RSS Catalog ist ein Stremio-Addon zur Erstellung von Katalogen aus RSS-Feeds. Es spielt keine Inhalte ab; dafür verwenden Sie Streaming-Addons wie <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> oder <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> mit <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Anleitungen auf <a href="https://upandclear.org" target="_blank">meinem Blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">Stack-Beispiel</a> zum Selbsthosten, <a href="https://stremiofr.com/" target="_blank">Instanzen</a> von der StremioFR-Community bereitgestellt.',
+    description_text: 'Stremio RSS Catalog ist ein Stremio-Addon zur Erstellung von Katalogen aus RSS-Feeds. Es spielt keine Inhalte ab; dafür verwenden Sie Streaming-Addons wie <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> oder <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> mit <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Anleitungen auf <a href="https://upandclear.org" target="_blank">meinem Blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">Stack-Beispiel</a> zum Selbsthosten, <a href="https://stremiofr.me/" target="_blank">Instanzen</a> von der StremioFR-Community bereitgestellt.',
 
     // Stats
     stat_films: "Filme",
@@ -271,7 +271,7 @@ const translations = {
     // Config
     config_title: "Konfiguration",
     config_note: "Dieses Tool verarbeitet nur Releases mit FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ-Tags.",
-    config_rss_films: "RSS-Feed für Filme, Dokumentarfilme oder Serien",
+    config_rss_films: "RSS-Feed",
     config_rss_films_hint: "Einschließlich Ihres API-Schlüssels oder Passkeys",
     config_rss_additional_title: "Zusätzliche RSS-Feeds",
     config_rss_additional_hint: "Gleiche Funktionsweise wie der Haupt-Feed: Filme, Dokumentarfilme und Serien werden automatisch erkannt.",
