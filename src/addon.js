@@ -63,7 +63,7 @@ class StremioAddon {
       }
 
       const skip = parseInt(extra?.skip) || 0;
-      const limit = 100;
+      const limit = 10000;
       let items;
 
       // Fetch one extra item to detect if there are more pages
@@ -109,7 +109,7 @@ class StremioAddon {
       }
 
       const skip = parseInt(extra?.skip) || 0;
-      const limit = 100;
+      const limit = 10000;
       let items;
 
       // Fetch one extra item to detect if there are more pages
