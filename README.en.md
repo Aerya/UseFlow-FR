@@ -20,6 +20,12 @@
 
 ---
 
+<p align="center">
+  💡 Use it? Like it? <a href="https://github.com/Aerya/UseFlow-FR/stargazers">⭐ Star it!</a> — it only takes a second.
+</p>
+
+---
+
 > A self-hosted Stremio addon that parses your RSS feeds, automatically identifies Movies, Documentaries and Series, matches them on TMDB, and exposes them as catalogs in Stremio.
 >
 > Currently, only a private Usenet indexer is fully supported. Other feeds may work, but without guarantee.

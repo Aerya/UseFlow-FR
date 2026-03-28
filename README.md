@@ -20,6 +20,12 @@
 
 ---
 
+<p align="center">
+  💡 Vous l'utilisez ? Vous l'aimez ? <a href="https://github.com/Aerya/UseFlow-FR/stargazers">⭐ Mettez une étoile !</a> — ça prend une seconde.
+</p>
+
+---
+
 > Addon Stremio auto-hébergé qui parse vos flux RSS, identifie automatiquement Films, Documentaires et Séries, les matche sur TMDB et les expose comme catalogues dans Stremio.
 >
 > Pour l'instant, seul un indexeur Usenet privé est pleinement supporté. D'autres flux peuvent fonctionner, mais sans garantie.
