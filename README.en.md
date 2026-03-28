@@ -1,91 +1,61 @@
-<h1 align="center">Stremio RSS Catalog</h1>
+<h1 align="center">
+  <img src="src/public/logo.png" alt="Stremio RSS Catalog" width="120"><br>
+  Stremio RSS Catalog
+</h1>
+
+<p align="center">
+  <strong>Turn your RSS feeds into Stremio catalogs — Movies, Documentaries and Series</strong>
+</p>
 
 <p align="center">
   <a href="./README.md">🇫🇷 Français</a> · <a href="./README.de.md">🇩🇪 Deutsch</a>
 </p>
 
-A Stremio addon for creating **Movies**, **Documentaries** and **Series** catalogs from RSS feeds, with automatic TMDB matching and a web management interface.
-
-Currently, only a private Usenet indexer is fully supported. I plan to integrate other RSS feeds in the future — some may already work, but I cannot guarantee reliability.
-
-
 <p align="center">
-  <img src="src/public/logo.png" alt="Stremio RSS Catalog Logo" width="250">
+  <img src="https://img.shields.io/badge/Stremio-addon-purple?style=flat-square" alt="Stremio">
+  <img src="https://img.shields.io/badge/Docker-ready-blue?style=flat-square&logo=docker" alt="Docker">
+  <img src="https://img.shields.io/badge/TMDB-matched-green?style=flat-square" alt="TMDB">
+  <img src="https://img.shields.io/badge/i18n-FR%20%7C%20EN%20%7C%20DE-orange?style=flat-square" alt="i18n">
 </p>
 
-## Blog post with screenshots
-[Stremio RSS Catalog: my RSS-to-Stremio-catalogs addon](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/) (French)
+---
 
+> A self-hosted Stremio addon that parses your RSS feeds, automatically identifies Movies, Documentaries and Series, matches them on TMDB, and exposes them as catalogs in Stremio.
+>
+> Currently, only a private Usenet indexer is fully supported. Other feeds may work, but without guarantee.
 
-## Features
+---
 
-- ✅ **3 separate catalogs**: Movies, Documentaries and Series
-- ✅ **Automatic type detection**: Movies, documentaries and series identified from the release name (S01E01, Season, etc.)
-- ✅ **Automatic TMDB matching**: Fetches metadata (posters, synopsis, genres, etc.) — series matched via TMDB's TV API
-- ✅ **RPDB support**: Custom posters with Rating Poster Database (optional)
-- ✅ **IMDB ID support**: Compatible with all Stremio streaming addons
-- ✅ **Full WebUI**: Modern administration interface with authentication
-- ✅ **Internationalization**: Interface available in 🇫🇷 French, 🇬🇧 English and 🇩🇪 German
-- ✅ **Multiple RSS feeds**: Add as many RSS feeds as needed
-- ✅ **Discord notifications**: Sync alerts with poster gallery (optional)
-- ✅ **Proxy management**: HTTP/HTTPS/SOCKS4/SOCKS5 support with or without authentication (optional)
-- ✅ **Persistent storage**: SQLite database with all catalogs and incremental content (items are added, never replaced)
-- ✅ **Automatic synchronization**: Configurable scheduling (optional)
-- ✅ **Dockerized**: Easy deployment with Docker and docker-compose
-- ✅ **Built-in search**: Search catalogs directly from Stremio
-- ✅ **Sync history**: Detailed tracking of all synchronizations
+## ✨ What's New
 
-Limited to content available in French (VF).
+- 🆕 **Renamed**: the addon is now called **Stremio RSS Catalog**
+- 📺 **Series support**: automatic detection from release names (`S01E01`, `Season N`…), matched via TMDB's TV API, grouped by title (one entry per show regardless of how many episodes/seasons appear in the feed)
 
-## WebUI Login
+---
 
-- **Username and password**: Set in docker-compose
-- **Secret Token** (cookie security): Generate with `openssl rand -hex 32` and set in docker-compose
+## 🎬 Features
 
+| | |
+|---|---|
+| 📁 **3 catalogs** | Movies · Documentaries · Series |
+| 🔍 **Auto detection** | Type identified from release name |
+| 🎯 **TMDB matching** | movie API for films/docs, tv API for series |
+| 🖼️ **RPDB** | Rating posters (optional) |
+| 🔔 **Discord** | Notifications with poster gallery on each sync |
+| 🔄 **Auto sync** | Configurable scheduling |
+| 🌐 **WebUI** | Full admin interface, 🇫🇷 🇬🇧 🇩🇪 |
+| 🔒 **Proxy** | HTTP / HTTPS / SOCKS4 / SOCKS5 |
+| 💾 **SQLite** | Persistent data, incremental content |
+| 🐳 **Docker** | Multi-arch image `linux/amd64` + `linux/arm64` |
 
-## Notes
+> Limited to French-language content (FRENCH / MULTi / TRUEFRENCH…)
 
-- Synchronization may take several minutes depending on the number of items in RSS feeds, especially the first time BEFORE adding the addon to Stremio
-- Content limit is currently set to 10,000 items per catalog
-- Only content with a valid IMDB ID is added to catalogs (Stremio requirement)
+---
 
+## 🚀 Quick Start
 
-## Technical Overview
+Copy or create [docker-compose.yml](./docker-compose.yml):
 
-### Release Parsing
-The addon automatically extracts:
-- The clean content name (technical tags stripped: resolution, codec, language, team…)
-- The release year
-- The type: **movie**, **documentary** or **series** (detected via patterns `S01E01`, `S01`, `Season N`)
-- For series, the season/episode part is removed from the name before the TMDB search
-
-### TMDB Matching
-For each item:
-1. Search TMDB with the cleaned name and year — using the **movie** API for films/docs, the **tv** API for series
-2. Retrieve the IMDB ID via TMDB's external_ids
-3. If an IMDB ID is found → added to catalog
-4. If no IMDB ID → item is skipped
-
-For series, multiple releases of the same show (different episodes or seasons) create only **one entry** in the catalog — grouped by title.
-
-This ensures that **only content compatible with streaming addons** is added.
-
-### RPDB Posters
-If RPDB is enabled:
-- TMDB posters are replaced with RPDB posters
-- Works in Stremio AND in Discord notifications
-- Automatic fallback to TMDB if the RPDB poster doesn't exist
-
-### Database
-All catalogs are saved in an SQLite database (`data/addon.db`). Data persists even if:
-- The server restarts
-- RSS feeds are modified or unavailable
-- Sources are temporarily unreachable
-
-
-### Getting Started
-
-Copy or create [the docker-compose.yml](./docker-compose.yml)
 ```yaml
 services:
   useflow-fr:
@@ -95,33 +65,80 @@ services:
     ports:
       - "7973:7000"
     volumes:
-    # Adapt to your configuration: /home/<your_name>/useflow-fr/:/data
       - /home/aerya/docker/useflow-fr/:/data
     environment:
       - PORT=7000
       - NODE_ENV=production
-      # You should change these
-      - WEBUI_USERNAME=admin
-      - WEBUI_PASSWORD=admin
-      # Usually no need to change
+      - WEBUI_USERNAME=admin        # Change this
+      - WEBUI_PASSWORD=admin        # Change this
       - DB_PATH=/data/addon.db
-      # Generate with openssl rand -hex 32
-      - SESSION_SECRET=278f898a4fdbecc8cfd904646336d08a32c04afdad664bacdfc5b8334dfb6653
+      - SESSION_SECRET=changeme     # openssl rand -hex 32
     labels:
       - com.centurylinklabs.watchtower.enable=true
-
 ```
 
-### Ideas Under Consideration
-Depending on motivation and skills
+Then open the WebUI at `http://localhost:7973`, configure your RSS feed + TMDB API key, run a first sync, and install the addon in Stremio using the provided URL.
 
-- **Genre filtering**: To enhance search capabilities
-- **Advanced statistics**: Catalog/source graphs
+---
 
+## ⚙️ How It Works
 
-## License
+### Release Parsing
 
-GNU GPL v3 License - Please credit the source.
+Each release title is analyzed to extract:
+- The **clean name** (technical tags stripped: resolution, codec, language, team…)
+- The **year** of release
+- The **type**: movie, documentary or series
 
+Series detection relies on patterns `S01E01`, `S01`, `Season N` — the season/episode part is then stripped from the name before the TMDB search.
 
-**Happy streaming :) 🍿**
+### TMDB Matching
+
+```
+RSS Release  →  Parsing  →  TMDB (movie or tv)  →  IMDB ID  →  Stremio Catalog
+```
+
+- Movies and documentaries → `/search/movie` API
+- Series → `/search/tv` API
+- Only content with a **valid IMDB ID** is added (required by Stremio)
+- For series: multiple releases of the same show → **one single entry** in the catalog
+
+### Persistence
+
+Everything is stored in a SQLite database (`data/addon.db`). Content **accumulates** — a sync never replaces existing data.
+
+---
+
+## 🔐 WebUI Login
+
+- **Credentials**: defined in `docker-compose.yml`
+- **Session secret**: generate with `openssl rand -hex 32`
+
+---
+
+## 📝 Notes
+
+- The first sync may take several minutes depending on feed size — do it **before** installing the addon in Stremio
+- Current limit: **10,000 items per catalog**
+- Only content with a valid IMDB ID is indexed
+
+---
+
+## 💡 Ideas Under Consideration
+
+- **Genre filtering** — to refine catalogs
+- **Advanced statistics** — charts and visualizations
+
+---
+
+## 📖 Blog Post
+
+[Stremio RSS Catalog: my RSS-to-Stremio-catalogs addon](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/) (French)
+
+---
+
+## 📄 License
+
+GNU GPL v3 — Please credit the source.
+
+**Happy streaming 🍿**
