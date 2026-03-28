@@ -6,7 +6,7 @@ RUN apk add --no-cache python3 make g++ vips-dev
 
 COPY package*.json ./
 
-RUN npm install --omit=dev
+RUN npm install --omit=dev --package-lock=false
 
 COPY . .
 
