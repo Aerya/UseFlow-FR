@@ -73,9 +73,16 @@ function addRssField(value, force) {
     input.style.minWidth = '0';
     if (value) input.value = value;
 
+    const selectWrapper = document.createElement('div');
+    selectWrapper.style.cssText = 'display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;';
+
+    const selectLabel = document.createElement('label');
+    selectLabel.textContent = 'Catalogue';
+    selectLabel.style.cssText = 'font-size: 11px; color: #888; margin: 0;';
+
     const select = document.createElement('select');
     select.className = 'additional-rss-force';
-    select.style.cssText = 'flex-shrink: 0; width: 160px; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;';
+    select.style.cssText = 'width: 160px; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;';
     [
         { value: 'auto', label: 'Tout' },
         { value: 'films', label: 'Films' },
@@ -89,6 +96,9 @@ function addRssField(value, force) {
     });
     if (force) select.value = force;
 
+    selectWrapper.appendChild(selectLabel);
+    selectWrapper.appendChild(select);
+
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.textContent = t('config_rss_remove_btn');
@@ -96,7 +106,7 @@ function addRssField(value, force) {
     removeBtn.onclick = function () { row.remove(); };
 
     row.appendChild(input);
-    row.appendChild(select);
+    row.appendChild(selectWrapper);
     row.appendChild(removeBtn);
     container.appendChild(row);
 }

@@ -52,7 +52,6 @@ const translations = {
 
     // Config
     config_title: "Configuration",
-    config_note: "Par défaut, seules les releases taggées FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ sont traitées. Modifiable via le champ « Tags requis » ci-dessous.",
     config_rss_films: "Flux RSS",
     config_rss_films_hint: "Incluant votre clé API ou passkey",
     config_rss_additional_title: "Flux RSS additionnels",
@@ -161,7 +160,6 @@ const translations = {
 
     // Config
     config_title: "Configuration",
-    config_note: "By default, only releases tagged FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ are processed. Configurable via the \"Required tags\" field below.",
     config_rss_films: "RSS Feed",
     config_rss_films_hint: "Including your API key or passkey",
     config_rss_additional_title: "Additional RSS Feeds",
@@ -270,7 +268,6 @@ const translations = {
 
     // Config
     config_title: "Konfiguration",
-    config_note: "Standardmäßig werden nur Releases mit FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ-Tags verarbeitet. Konfigurierbar über das Feld „Erforderliche Tags" unten.",
     config_rss_films: "RSS-Feed",
     config_rss_films_hint: "Einschließlich Ihres API-Schlüssels oder Passkeys",
     config_rss_additional_title: "Zusätzliche RSS-Feeds",

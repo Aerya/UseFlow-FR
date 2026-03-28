@@ -931,20 +931,20 @@ class WebUI {
       '        </div>' +
       '        <div class="section">' +
       '            <h2 data-i18n="config_title">Configuration</h2>' +
-      '            <p class="description-text" style="margin-bottom: 20px; font-style: italic;" data-i18n="config_note">' +
-      '                Cet outil ne traite que les releases taggées FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ.' +
-      '            </p>' +
       '            <form id="configForm">' +
       '                <div class="form-group">' +
       '                    <label for="rss_films_url" data-i18n="config_rss_films">Flux RSS</label>' +
       '                    <div style="display: flex; gap: 10px; align-items: center;">' +
       '                        <input type="url" id="rss_films_url" name="rss_films_url" required placeholder="https://domain.tld/rssnew?cats=...&key=..." style="flex: 1; min-width: 0;">' +
-      '                        <select id="rss_films_force" name="rss_films_force" style="flex-shrink: 0; width: 160px; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;">' +
+      '                        <div style="display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;">' +
+      '                            <label style="font-size: 11px; color: #888; margin: 0;">Catalogue</label>' +
+      '                            <select id="rss_films_force" name="rss_films_force" style="width: 160px; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;">' +
       '                            <option value="auto">Tout</option>' +
       '                            <option value="films">Films</option>' +
       '                            <option value="series">Séries</option>' +
       '                            <option value="documentaires">Documentaires</option>' +
-      '                        </select>' +
+      '                            </select>' +
+      '                        </div>' +
       '                    </div>' +
       '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_rss_films_hint">' +
       '                        Incluant votre clé API ou passkey' +
