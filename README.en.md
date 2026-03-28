@@ -44,7 +44,7 @@
 | | |
 |---|---|
 | 📁 **3 catalogs** | Movies · Documentaries · Series |
-| 🔍 **Auto detection** | Type identified from release name |
+| 🔍 **Auto detection** | Type identified from release name, or forced per feed |
 | 🎯 **TMDB matching** | movie API for films/docs, tv API for series |
 | 🖼️ **RPDB** | Rating posters (optional) |
 | 🔔 **Discord** | Notifications with poster gallery on each sync |
@@ -97,6 +97,8 @@ Each release title is analyzed to extract:
 - The **type**: movie, documentary or series
 
 Series detection relies on patterns `S01E01`, `S01`, `Season N` — the season/episode part is then stripped from the name before the TMDB search.
+
+You can also **force the type per RSS feed** (Movies / Series / Documentaries / Auto) from the WebUI — useful when a feed contains only one type of content.
 
 ### TMDB Matching
 

@@ -119,6 +119,14 @@ class RSSParser {
     return info;
   }
 
+  applyForce(catalogType, type, force) {
+    if (!force || force === 'auto') return { catalogType, type };
+    if (force === 'films') return { catalogType: 'films', type: 'movie' };
+    if (force === 'series') return { catalogType: 'series', type: 'series' };
+    if (force === 'documentaires') return { catalogType: 'documentaires', type: 'movie' };
+    return { catalogType, type };
+  }
+
   async parseFilmsRSS() {
     const rssUrl = this.db.getConfig('rss_films_url');
     if (!rssUrl) {
@@ -126,22 +134,26 @@ class RSSParser {
       return [];
     }
 
+    const force = this.db.getConfig('rss_films_force') || 'auto';
     const items = await this.fetchRSS(rssUrl);
 
     const parsed = [];
     for (const item of items) {
       const info = this.parseReleaseName(item.title);
-
-      // Extraire l'ID correctement (peut être un objet ou une string)
       const releaseId = typeof item.guid === 'object' && item.guid._ ? item.guid._ : (item.guid || item.link);
+      const detected = this.applyForce(
+        info.isSeries ? 'series' : (info.isDoc ? 'documentaires' : 'films'),
+        info.isSeries ? 'series' : 'movie',
+        force
+      );
 
       parsed.push({
         release_name: item.title,
         indexer_rlz_id: releaseId,
         cleanName: info.cleanName,
         year: info.year,
-        catalog_type: info.isSeries ? 'series' : (info.isDoc ? 'documentaires' : 'films'),
-        type: info.isSeries ? 'series' : 'movie',
+        catalog_type: detected.catalogType,
+        type: detected.type,
         pubDate: item.pubDate
       });
     }
@@ -165,9 +177,13 @@ class RSSParser {
     }
 
     const allParsed = [];
-    for (const rssUrl of additionalUrls) {
+    for (const entry of additionalUrls) {
+      // Compat ancien format (string) et nouveau format ({url, force})
+      const rssUrl = typeof entry === 'string' ? entry : entry.url;
+      const force = typeof entry === 'string' ? 'auto' : (entry.force || 'auto');
+
       if (!rssUrl || !rssUrl.trim()) continue;
-      console.log('[RSS] Parsing additional feed:', rssUrl.substring(0, 50) + '...');
+      console.log('[RSS] Parsing additional feed:', rssUrl.substring(0, 50) + '... (force: ' + force + ')');
 
       try {
         const items = await this.fetchRSS(rssUrl.trim());
@@ -175,14 +191,19 @@ class RSSParser {
         for (const item of items) {
           const info = this.parseReleaseName(item.title);
           const releaseId = typeof item.guid === 'object' && item.guid._ ? item.guid._ : (item.guid || item.link);
+          const detected = this.applyForce(
+            info.isSeries ? 'series' : (info.isDoc ? 'documentaires' : 'films'),
+            info.isSeries ? 'series' : 'movie',
+            force
+          );
 
           allParsed.push({
             release_name: item.title,
             indexer_rlz_id: releaseId,
             cleanName: info.cleanName,
             year: info.year,
-            catalog_type: info.isSeries ? 'series' : (info.isDoc ? 'documentaires' : 'films'),
-            type: info.isSeries ? 'series' : 'movie',
+            catalog_type: detected.catalogType,
+            type: detected.type,
             pubDate: item.pubDate
           });
         }

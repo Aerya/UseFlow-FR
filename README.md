@@ -44,7 +44,7 @@
 | | |
 |---|---|
 | 📁 **3 catalogues** | Films · Documentaires · Séries |
-| 🔍 **Détection automatique** | Type identifié depuis le nom de release |
+| 🔍 **Détection automatique** | Type identifié depuis le nom de release, ou forcé par flux |
 | 🎯 **Matching TMDB** | API movie pour films/docs, API tv pour séries |
 | 🖼️ **RPDB** | Affiches avec notes intégrées (optionnel) |
 | 🔔 **Discord** | Notifications avec galerie d'affiches à chaque sync |
@@ -97,6 +97,8 @@ Chaque titre de release est analysé pour en extraire :
 - Le **type** : film, documentaire ou série
 
 La détection série repose sur les patterns `S01E01`, `S01`, `Saison N`, `Season N` — la partie saison/épisode est ensuite retirée du nom avant la recherche TMDB.
+
+Il est également possible de **forcer le type par flux RSS** (Films / Séries / Documentaires / Auto) depuis la WebUI — utile si un flux ne contient qu'un seul type de contenu.
 
 ### Matching TMDB
 

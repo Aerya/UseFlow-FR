@@ -750,7 +750,7 @@ class WebUI {
       '        }' +
       '        .history-stats {' +
       '            display: grid;' +
-      '            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));' +
+      '            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));' +
       '            gap: 10px;' +
       '            margin-top: 10px;' +
       '        }' +
@@ -766,7 +766,7 @@ class WebUI {
       '            text-transform: uppercase;' +
       '        }' +
       '        .history-stat-value {' +
-      '            font-size: 18px;' +
+      '            font-size: 16px;' +
       '            font-weight: bold;' +
       '            color: var(--text-primary);' +
       '        }' +
@@ -937,7 +937,15 @@ class WebUI {
       '            <form id="configForm">' +
       '                <div class="form-group">' +
       '                    <label for="rss_films_url" data-i18n="config_rss_films">Flux RSS</label>' +
-      '                    <input type="url" id="rss_films_url" name="rss_films_url" required placeholder="https://domain.tld/rssnew?cats=...&key=...">' +
+      '                    <div style="display: flex; gap: 10px; align-items: center;">' +
+      '                        <input type="url" id="rss_films_url" name="rss_films_url" required placeholder="https://domain.tld/rssnew?cats=...&key=..." style="flex: 1;">' +
+      '                        <select id="rss_films_force" name="rss_films_force" style="padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;">' +
+      '                            <option value="auto" data-i18n="config_rss_force_auto">Auto</option>' +
+      '                            <option value="films" data-i18n="config_rss_force_films">Films</option>' +
+      '                            <option value="series" data-i18n="config_rss_force_series">Séries</option>' +
+      '                            <option value="documentaires" data-i18n="config_rss_force_docs">Documentaires</option>' +
+      '                        </select>' +
+      '                    </div>' +
       '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_rss_films_hint">' +
       '                        Incluant votre clé API ou passkey' +
       '                    </small>' +

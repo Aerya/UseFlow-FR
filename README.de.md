@@ -44,7 +44,7 @@
 | | |
 |---|---|
 | 📁 **3 Kataloge** | Filme · Dokumentarfilme · Serien |
-| 🔍 **Auto-Erkennung** | Typ wird aus dem Release-Namen erkannt |
+| 🔍 **Auto-Erkennung** | Typ wird aus dem Release-Namen erkannt oder pro Feed erzwungen |
 | 🎯 **TMDB-Abgleich** | movie-API für Filme/Dokus, tv-API für Serien |
 | 🖼️ **RPDB** | Bewertungs-Poster (optional) |
 | 🔔 **Discord** | Benachrichtigungen mit Poster-Galerie bei jeder Sync |
@@ -97,6 +97,8 @@ Jeder Release-Titel wird analysiert, um Folgendes zu extrahieren:
 - Den **Typ**: Film, Dokumentarfilm oder Serie
 
 Die Serienerkennung basiert auf Mustern wie `S01E01`, `S01`, `Staffel N`, `Season N` — der Staffel-/Episodenteil wird dann vor der TMDB-Suche aus dem Namen entfernt.
+
+Es ist auch möglich, den **Typ pro RSS-Feed zu erzwingen** (Filme / Serien / Dokumentarfilme / Auto) über die WebUI — nützlich, wenn ein Feed nur einen Inhaltstyp enthält.
 
 ### TMDB-Abgleich
 

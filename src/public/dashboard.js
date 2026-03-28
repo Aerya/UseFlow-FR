@@ -53,7 +53,7 @@ function fallbackCopyTextToClipboard(text) {
 
 let rssFieldCounter = 0;
 
-function addRssField(value) {
+function addRssField(value, force) {
     rssFieldCounter++;
     const container = document.getElementById('additionalRssContainer');
     if (!container) return;
@@ -72,6 +72,22 @@ function addRssField(value) {
     input.style.flex = '1';
     if (value) input.value = value;
 
+    const select = document.createElement('select');
+    select.className = 'additional-rss-force';
+    select.style.cssText = 'padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;';
+    [
+        { value: 'auto', label: t('config_rss_force_auto') },
+        { value: 'films', label: t('config_rss_force_films') },
+        { value: 'series', label: t('config_rss_force_series') },
+        { value: 'documentaires', label: t('config_rss_force_docs') }
+    ].forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt.value;
+        o.textContent = opt.label;
+        select.appendChild(o);
+    });
+    if (force) select.value = force;
+
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.textContent = t('config_rss_remove_btn');
@@ -79,6 +95,7 @@ function addRssField(value) {
     removeBtn.onclick = function () { row.remove(); };
 
     row.appendChild(input);
+    row.appendChild(select);
     row.appendChild(removeBtn);
     container.appendChild(row);
 }
@@ -89,11 +106,13 @@ function removeRssField(id) {
 }
 
 function getAdditionalRssUrls() {
-    const inputs = document.querySelectorAll('.additional-rss-url');
+    const rows = document.querySelectorAll('#additionalRssContainer .form-group');
     const urls = [];
-    inputs.forEach(input => {
-        if (input.value && input.value.trim()) {
-            urls.push(input.value.trim());
+    rows.forEach(row => {
+        const input = row.querySelector('.additional-rss-url');
+        const select = row.querySelector('.additional-rss-force');
+        if (input && input.value && input.value.trim()) {
+            urls.push({ url: input.value.trim(), force: select ? select.value : 'auto' });
         }
     });
     return urls;
@@ -182,8 +201,14 @@ async function loadConfig() {
                 if (container) container.innerHTML = '';
                 rssFieldCounter = 0;
                 if (Array.isArray(urls)) {
-                    urls.forEach(url => {
-                        if (url && url.trim()) addRssField(url);
+                    urls.forEach(entry => {
+                        if (!entry) return;
+                        // Compat ancien format (string) et nouveau format (objet)
+                        if (typeof entry === 'string') {
+                            if (entry.trim()) addRssField(entry.trim(), 'auto');
+                        } else if (entry.url && entry.url.trim()) {
+                            addRssField(entry.url.trim(), entry.force || 'auto');
+                        }
                     });
                 }
             } catch (e) {
