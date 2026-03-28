@@ -128,6 +128,7 @@ Everything is stored in a SQLite database (`data/addon.db`). Content **accumulat
 
 - The first sync may take several minutes depending on feed size — do it **before** installing the addon in Stremio
 - Current limit: **10,000 items per catalog**
+- **10,000 items loaded per catalog page**, within the limits of what Stremio supports
 - Only content with a valid IMDB ID is indexed
 
 ---

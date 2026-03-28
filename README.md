@@ -128,6 +128,7 @@ Tout est stocké dans une base SQLite (`data/addon.db`). Les contenus s'**accumu
 
 - La 1ère synchronisation peut prendre plusieurs minutes selon la taille du flux RSS — à faire **avant** d'installer l'addon dans Stremio
 - Limite actuelle : **10 000 items par catalogue**
+- Chargement de **10 000 items par page** de catalogue, dans les limites des possibilités de Stremio
 - Seuls les contenus avec un ID IMDB sont indexés
 
 ---

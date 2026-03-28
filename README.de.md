@@ -128,6 +128,7 @@ Alles wird in einer SQLite-Datenbank (`data/addon.db`) gespeichert. Inhalte **ak
 
 - Die erste Synchronisierung kann je nach Feed-Größe mehrere Minuten dauern — **vor** der Installation des Addons in Stremio durchführen
 - Aktuelles Limit: **10.000 Elemente pro Katalog**
+- **10.000 Elemente pro Katalogseite** geladen, im Rahmen der Stremio-Möglichkeiten
 - Nur Inhalte mit einer gültigen IMDB-ID werden indexiert
 
 ---
