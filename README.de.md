@@ -1,26 +1,27 @@
-<h1 align="center">UseFlow-FR</h1>
+<h1 align="center">Stremio RSS Catalog</h1>
 
 <p align="center">
   <a href="./README.md">🇫🇷 Français</a> · <a href="./README.en.md">🇬🇧 English</a>
 </p>
 
-Ein Stremio-Addon zur Erstellung von **Film**- und **Dokumentarfilm**-Katalogen aus RSS-Feeds, mit automatischem TMDB-Abgleich und einer Web-Verwaltungsoberfläche.
+Ein Stremio-Addon zur Erstellung von **Film**-, **Dokumentarfilm**- und **Serien**-Katalogen aus RSS-Feeds, mit automatischem TMDB-Abgleich und einer Web-Verwaltungsoberfläche.
 
 Derzeit wird nur ein privater Usenet-Indexer vollständig unterstützt. Ich plane, in Zukunft weitere RSS-Feeds zu integrieren — einige funktionieren möglicherweise bereits, aber ich kann keine Zuverlässigkeit garantieren.
 
 
 <p align="center">
-  <img src="src/public/logo.png" alt="UseFlow-FR Logo" width="250">
+  <img src="src/public/logo.png" alt="Stremio RSS Catalog Logo" width="250">
 </p>
 
 ## Blog-Beitrag mit Screenshots
-[UseFlow-FR: mein RSS-zu-Stremio-Katalog-Addon](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/) (Französisch)
+[Stremio RSS Catalog: mein RSS-zu-Stremio-Katalog-Addon](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/) (Französisch)
 
 
 ## Funktionen
 
-- ✅ **2 getrennte Kataloge**: Filme und Dokumentarfilme
-- ✅ **Automatischer TMDB-Abgleich**: Abruf von Metadaten (Poster, Zusammenfassung, Genres, usw.)
+- ✅ **3 getrennte Kataloge**: Filme, Dokumentarfilme und Serien
+- ✅ **Automatische Typerkennung**: Filme, Dokumentarfilme und Serien werden anhand des Release-Namens erkannt (`S01E01`, `Staffel`, `Season` usw.)
+- ✅ **Automatischer TMDB-Abgleich**: Abruf von Metadaten (Poster, Zusammenfassung, Genres, usw.) — Serien über die TV-API von TMDB
 - ✅ **RPDB-Unterstützung**: Benutzerdefinierte Poster mit Rating Poster Database (optional)
 - ✅ **IMDB-ID-Unterstützung**: Kompatibel mit allen Stremio-Streaming-Addons
 - ✅ **Vollständige WebUI**: Moderne Administrationsoberfläche mit Authentifizierung
@@ -53,16 +54,20 @@ Beschränkt auf Inhalte, die auf Französisch (VF) verfügbar sind.
 
 ### Release-Parsing
 Das Addon extrahiert automatisch:
-- Den bereinigten Inhaltsnamen
+- Den bereinigten Inhaltsnamen (technische Tags werden entfernt: Auflösung, Codec, Sprache, Team…)
 - Das Erscheinungsjahr
-- Den Typ (Film, Dokumentarfilm)
+- Den Typ: **Film**, **Dokumentarfilm** oder **Serie** (erkannt über Muster wie `S01E01`, `S01`, `Staffel N`, `Season N`)
+- Bei Serien wird der Staffel-/Episodenteil vor der TMDB-Suche aus dem Namen entfernt
 
 ### TMDB-Abgleich
 Für jedes Element:
-1. Suche auf TMDB mit dem bereinigten Namen und Jahr
+1. Suche auf TMDB mit dem bereinigten Namen und Jahr — über die **movie**-API für Filme/Dokus, die **tv**-API für Serien
 2. Abruf der IMDB-ID über TMDBs external_ids
 3. Wenn eine IMDB-ID gefunden wird → Hinzufügung zum Katalog
 4. Wenn keine IMDB-ID → Element wird übersprungen
+
+Bei Serien erzeugen mehrere Releases derselben Serie (verschiedene Episoden oder Staffeln) nur **einen einzigen Eintrag** im Katalog — gruppiert nach Titel.
+
 Dies stellt sicher, dass **nur mit Streaming-Addons kompatible Inhalte** hinzugefügt werden.
 
 ### RPDB-Poster
@@ -110,7 +115,6 @@ services:
 ### Ideen in Überlegung
 Je nach Motivation und Fähigkeiten
 
-- **Serienunterstützung**: Verarbeitung von TV-Serien-RSS-Feeds
 - **Genre-Filterung**: Zur Verbesserung der Suchfunktionen
 - **Erweiterte Statistiken**: Katalog-/Quellgrafiken
 

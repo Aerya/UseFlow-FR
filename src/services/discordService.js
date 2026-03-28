@@ -90,12 +90,12 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
             fields: [
                 {
                     name: 'Ajoutés',
-                    value: `Films : **${syncStats.filmsAdded || 0}**\nDocs : **${syncStats.documentairesAdded || 0}**`,
+                    value: `Films : **${syncStats.filmsAdded || 0}**\nDocs : **${syncStats.documentairesAdded || 0}**\nSéries : **${syncStats.seriesAdded || 0}**`,
                     inline: true
                 },
                 {
                     name: 'Totaux',
-                    value: `Films: **${syncStats.totalFilms || 0}**\nDocs: **${syncStats.totalDocs || 0}**`,
+                    value: `Films: **${syncStats.totalFilms || 0}**\nDocs: **${syncStats.totalDocs || 0}**\nSéries: **${syncStats.totalSeries || 0}**`,
                     inline: true
                 },
                 {
@@ -106,7 +106,7 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
             ],
             timestamp: new Date().toISOString(),
             footer: {
-                text: 'UseFlow-FR Stremio Addon'
+                text: 'Stremio RSS Catalog'
             }
         };
 
@@ -131,7 +131,7 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
 
         // Send Main Embed
         await axios.post(webhookUrl, {
-            username: 'UseFlow-FR',
+            username: 'Stremio RSS Catalog',
             avatar_url: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
             embeds: [mainEmbed]
         });
@@ -155,7 +155,7 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
                     form.append('file', compositeImage, 'films.png');
 
                     const payload = {
-                        username: 'UseFlow-FR',
+                        username: 'Stremio RSS Catalog',
                         avatar_url: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
                         embeds: [{
                             title: 'Derniers Films ajoutés',
@@ -189,13 +189,47 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
                     form.append('file', compositeImage, 'documentaires.png');
 
                     const payload = {
-                        username: 'UseFlow-FR',
+                        username: 'Stremio RSS Catalog',
                         avatar_url: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
                         embeds: [{
                             title: 'Derniers Documentaires ajoutés',
                             color: 0x48bb78,
                             image: {
                                 url: 'attachment://documentaires.png'
+                            }
+                        }]
+                    };
+
+                    form.append('payload_json', JSON.stringify(payload));
+
+                    await axios.post(webhookUrl, form, {
+                        headers: form.getHeaders()
+                    });
+                }
+            }
+
+            // Send Series Gallery
+            if (syncStats.recentAdditions.series && syncStats.recentAdditions.series.length > 0) {
+                const compositeImage = await createCompositeImage(
+                    syncStats.recentAdditions.series,
+                    rpdbEnabled,
+                    rpdbKey
+                );
+
+                if (compositeImage) {
+                    const FormData = require('form-data');
+                    const form = new FormData();
+
+                    form.append('file', compositeImage, 'series.png');
+
+                    const payload = {
+                        username: 'Stremio RSS Catalog',
+                        avatar_url: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
+                        embeds: [{
+                            title: 'Dernières Séries ajoutées',
+                            color: 0xed8936,
+                            image: {
+                                url: 'attachment://series.png'
                             }
                         }]
                     };

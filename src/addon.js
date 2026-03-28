@@ -6,17 +6,17 @@ class StremioAddon {
     this.manifest = {
       id: 'community.useflowfr.catalog',
       version: '1.0.0',
-      name: 'UseFlow-FR',
-      description: 'Catalogues de Films et Documentaires',
+      name: 'Stremio RSS Catalog',
+      description: 'Catalogues Films, Documentaires et Séries depuis vos flux RSS',
       logo: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
       resources: ['catalog'],
-      types: ['movie'],
+      types: ['movie', 'series'],
       idPrefixes: ['tt'], // Support des IDs IMDB
       catalogs: [
         {
           type: 'movie',
           id: 'useflowfr_films',
-          name: 'UseFlow-FR Films',
+          name: 'Stremio RSS Catalog - Films',
           extra: [
             { name: 'skip', isRequired: false },
             { name: 'search', isRequired: false }
@@ -25,7 +25,16 @@ class StremioAddon {
         {
           type: 'movie',
           id: 'useflowfr_documentaires',
-          name: 'UseFlow-FR Documentaires',
+          name: 'Stremio RSS Catalog - Documentaires',
+          extra: [
+            { name: 'skip', isRequired: false },
+            { name: 'search', isRequired: false }
+          ]
+        },
+        {
+          type: 'series',
+          id: 'useflowfr_series',
+          name: 'Stremio RSS Catalog - Séries',
           extra: [
             { name: 'skip', isRequired: false },
             { name: 'search', isRequired: false }
@@ -44,7 +53,8 @@ class StremioAddon {
 
       const catalogMap = {
         'useflowfr_films': 'films',
-        'useflowfr_documentaires': 'documentaires'
+        'useflowfr_documentaires': 'documentaires',
+        'useflowfr_series': 'series'
       };
 
       const catalogType = catalogMap[id];
@@ -89,7 +99,8 @@ class StremioAddon {
       // Mapper les IDs de catalogue aux types de catalogue dans la DB
       const catalogMap = {
         'useflowfr_films': 'films',
-        'useflowfr_documentaires': 'documentaires'
+        'useflowfr_documentaires': 'documentaires',
+        'useflowfr_series': 'series'
       };
 
       const catalogType = catalogMap[id];

@@ -1,26 +1,27 @@
-<h1 align="center">UseFlow-FR</h1>
+<h1 align="center">Stremio RSS Catalog</h1>
 
 <p align="center">
   <a href="./README.en.md">🇬🇧 English</a> · <a href="./README.de.md">🇩🇪 Deutsch</a>
 </p>
 
-Addon Stremio de création de catalogues **Films** et **Documentaires** depuis des flux RSS, avec matching TMDB automatique et interface web de gestion.
+Addon Stremio de création de catalogues **Films**, **Documentaires** et **Séries** depuis des flux RSS, avec matching TMDB automatique et interface web de gestion.
 
 Pour l'instant, seul un indexeur Usenet privé, soucieux de sa discrétion, est pleinement supporté. Je souhaite intégrer à terme l'ajout d'autres flux RSS, certains peuvent déjà fonctionner mais je ne peux garantir la fiabilité de l'outil.
 
 
 <p align="center">
-  <img src="src/public/logo.png" alt="Logo UseFlow-FR" width="250">
+  <img src="src/public/logo.png" alt="Logo Stremio RSS Catalog" width="250">
 </p>
 
 ## Article de blog avec screenshots
-[UseFlow-FR : mon addon de conversion de RSS en catalogues Stremio](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/)  
+[Stremio RSS Catalog : mon addon de conversion de RSS en catalogues Stremio](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/)  
 
 
 ## Fonctionnalités
 
-- ✅ **2 catalogues séparés** : Films et Documentaires
-- ✅ **Matching TMDB automatique** : Recherche et récupération des métadonnées (posters, synopsis, genres, etc.)
+- ✅ **3 catalogues séparés** : Films, Documentaires et Séries
+- ✅ **Détection automatique du type** : Films, documentaires et séries identifiés depuis le nom de release (S01E01, Saison, etc.)
+- ✅ **Matching TMDB automatique** : Recherche et récupération des métadonnées (posters, synopsis, genres, etc.) — séries via l'API TV de TMDB
 - ✅ **Support RPDB** : Affiches personnalisées avec Rating Poster Database (optionnel)
 - ✅ **Support des IDs IMDB** : Compatible avec tous les addons de streaming Stremio
 - ✅ **WebUI complète** : Interface d'administration moderne avec authentification
@@ -53,16 +54,20 @@ Et c'est limité aux contenus disponibles en VF.
 
 ### Parsing des releases
 L'addon extrait automatiquement :
-- Le nom propre du contenu
+- Le nom propre du contenu (suppression des tags techniques : résolution, codec, langue, équipe…)
 - L'année de sortie
-- Le type (film, documentaire)
+- Le type : **film**, **documentaire** ou **série** (détecté via les patterns `S01E01`, `S01`, `Saison N`, `Season N`)
+- Pour les séries, la partie saison/épisode est retirée du nom avant la recherche TMDB
 
 ### Matching TMDB
 Pour chaque élément :
-1. Recherche sur TMDB avec le nom nettoyé et l'année
+1. Recherche sur TMDB avec le nom nettoyé et l'année — via l'API **movie** pour les films/docs, via l'API **tv** pour les séries
 2. Récupération de l'ID IMDB via les external_ids de TMDB
 3. Si un ID IMDB est trouvé → ajout au catalogue
 4. Si aucun ID IMDB → l'élément est ignoré
+
+Pour les séries, plusieurs releases d'un même show (épisodes, saisons différentes) ne créent qu'**une seule fiche** dans le catalogue — le regroupement se fait par titre.
+
 Cela garantit que **seuls les contenus compatibles avec les addons de streaming** sont ajoutés.
 
 ### Affiches RPDB
@@ -110,7 +115,6 @@ services:
 ### Idées en réflexion
 Selon motivation et compétences de bibi
 
-- **Support des séries** : Prise en charge des flux RSS de séries TV
 - **Filtrage par genres** : Pour étoffer un peu la recherche
 - **Statistiques avancées** : Graphiques catalogues/sources
 

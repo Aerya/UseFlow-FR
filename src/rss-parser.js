@@ -70,12 +70,18 @@ class RSSParser {
     const info = {
       name: title,
       year: null,
-      isDoc: false
+      isDoc: false,
+      isSeries: false
     };
 
     // Détecter documentaire
     if (/\b(doc|docu|documentary|documentaire)\b/i.test(title)) {
       info.isDoc = true;
+    }
+
+    // Détecter série (S01E01, S01, Saison N, Season N)
+    if (/\bS\d{2}(E\d{2,3})?\b/i.test(title) || /\b(Saison|Season)\s*\d+\b/i.test(title)) {
+      info.isSeries = true;
     }
 
     // Extraire l'année
@@ -95,7 +101,15 @@ class RSSParser {
       .replace(/[.\s]+/g, ' ')
       .trim();
 
-    // Extraire le nom propre
+    // Pour les séries : supprimer la partie saison/épisode du nom
+    if (info.isSeries) {
+      cleanName = cleanName
+        .replace(/\s+S\d{2}(E\d{2,3}(-E?\d{2,3})?)?.*/i, '')
+        .replace(/\s+(Saison|Season)\s*\d+.*/i, '')
+        .trim();
+    }
+
+    // Extraire le nom propre (couper à l'année)
     if (info.year) {
       const parts = cleanName.split(info.year);
       cleanName = parts[0].trim();
@@ -126,8 +140,8 @@ class RSSParser {
         indexer_rlz_id: releaseId,
         cleanName: info.cleanName,
         year: info.year,
-        catalog_type: info.isDoc ? 'documentaires' : 'films',
-        type: 'movie',
+        catalog_type: info.isSeries ? 'series' : (info.isDoc ? 'documentaires' : 'films'),
+        type: info.isSeries ? 'series' : 'movie',
         pubDate: item.pubDate
       });
     }
@@ -167,8 +181,8 @@ class RSSParser {
             indexer_rlz_id: releaseId,
             cleanName: info.cleanName,
             year: info.year,
-            catalog_type: info.isDoc ? 'documentaires' : 'films',
-            type: 'movie',
+            catalog_type: info.isSeries ? 'series' : (info.isDoc ? 'documentaires' : 'films'),
+            type: info.isSeries ? 'series' : 'movie',
             pubDate: item.pubDate
           });
         }

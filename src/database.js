@@ -79,6 +79,13 @@ class DatabaseManager {
       // Column already exists, ignore
     }
 
+    // Add series_added column to sync_history if it doesn't exist (migration)
+    try {
+      this.db.exec(`ALTER TABLE sync_history ADD COLUMN series_added INTEGER DEFAULT 0`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
     // Initialiser la config par défaut
     this.initDefaultConfig();
   }
@@ -263,6 +270,10 @@ class DatabaseManager {
     if (data.documentaires_added !== undefined) {
       fields.push('documentaires_added = ?');
       values.push(data.documentaires_added);
+    }
+    if (data.series_added !== undefined) {
+      fields.push('series_added = ?');
+      values.push(data.series_added);
     }
     if (data.status) {
       fields.push('status = ?');

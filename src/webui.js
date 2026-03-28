@@ -13,6 +13,7 @@ class WebUI {
     this.stremioAddon = stremioAddon;
     this.app = express();
     this.syncInProgress = false;
+    this.syncStartedAt = null;
     this.syncStatus = null;
     this.autoRefreshInterval = null;
 
@@ -113,9 +114,10 @@ class WebUI {
       const stats = {
         films: this.db.getCatalogCount('films'),
         documentaires: this.db.getCatalogCount('documentaires'),
+        series: this.db.getCatalogCount('series'),
         total: 0
       };
-      stats.total = stats.films + stats.documentaires;
+      stats.total = stats.films + stats.documentaires + stats.series;
       res.json(stats);
     });
 
@@ -135,6 +137,7 @@ class WebUI {
       this.baseUrl = `${protocol}://${host}`;
 
       this.syncInProgress = true;
+      this.syncStartedAt = Date.now();
       this.syncStatus = {
         running: true,
         stage: 'Démarrage...',
@@ -149,6 +152,7 @@ class WebUI {
         this.syncStatus.error = error.message;
       }).finally(() => {
         this.syncInProgress = false;
+        this.syncStartedAt = null;
       });
     });
 
@@ -208,7 +212,8 @@ class WebUI {
     const startTime = Date.now();
     const catalogsBefore = {
       films: this.db.getCatalogCount('films'),
-      documentaires: this.db.getCatalogCount('documentaires')
+      documentaires: this.db.getCatalogCount('documentaires'),
+      series: this.db.getCatalogCount('series')
     };
 
     try {
@@ -240,11 +245,13 @@ class WebUI {
 
       const catalogsAfter = {
         films: this.db.getCatalogCount('films'),
-        documentaires: this.db.getCatalogCount('documentaires')
+        documentaires: this.db.getCatalogCount('documentaires'),
+        series: this.db.getCatalogCount('series')
       };
 
       const filmsAdded = catalogsAfter.films - catalogsBefore.films;
       const documentairesAdded = catalogsAfter.documentaires - catalogsBefore.documentaires;
+      const seriesAdded = catalogsAfter.series - catalogsBefore.series;
 
       this.db.updateSyncHistory(syncId, {
         matched_items: result.matched,
@@ -252,6 +259,7 @@ class WebUI {
         already_in_db: result.alreadyInDb || 0,
         films_added: filmsAdded,
         documentaires_added: documentairesAdded,
+        series_added: seriesAdded,
         status: 'completed',
         finished_at: Date.now()
       });
@@ -263,6 +271,7 @@ class WebUI {
       this.syncStatus.completed = true;
       this.syncStatus.filmsAdded = filmsAdded;
       this.syncStatus.documentairesAdded = documentairesAdded;
+      this.syncStatus.seriesAdded = seriesAdded;
 
       console.log('Sync completed:', result);
 
@@ -274,8 +283,10 @@ class WebUI {
           status: 'completed',
           filmsAdded,
           documentairesAdded,
+          seriesAdded,
           totalFilms: catalogsAfter.films,
           totalDocs: catalogsAfter.documentaires,
+          totalSeries: catalogsAfter.series,
           matched: result.matched,
           failed: result.failed,
           duration,
@@ -286,10 +297,11 @@ class WebUI {
 
         // Add recent additions if enhanced notifications are enabled
         const enhancedEnabled = this.db.getConfig('discord_enhanced_notifications_enabled') === 'true';
-        if (enhancedEnabled && (filmsAdded > 0 || documentairesAdded > 0)) {
+        if (enhancedEnabled && (filmsAdded > 0 || documentairesAdded > 0 || seriesAdded > 0)) {
           notificationData.recentAdditions = {
             films: filmsAdded > 0 ? this.db.getRecentCatalogAdditions('films', 5) : [],
-            documentaires: documentairesAdded > 0 ? this.db.getRecentCatalogAdditions('documentaires', 5) : []
+            documentaires: documentairesAdded > 0 ? this.db.getRecentCatalogAdditions('documentaires', 5) : [],
+            series: seriesAdded > 0 ? this.db.getRecentCatalogAdditions('series', 5) : []
           };
         }
 
@@ -331,7 +343,7 @@ class WebUI {
       '<head>' +
       '    <meta charset="UTF-8">' +
       '    <meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-      '    <title>UseFlow-FR - Login</title>' +
+      '    <title>Stremio RSS Catalog - Login</title>' +
       '    <style>' +
       '        * { margin: 0; padding: 0; box-sizing: border-box; }' +
       '        body {' +
@@ -437,8 +449,8 @@ class WebUI {
       '            <option value="en">🇬🇧 EN</option>' +
       '            <option value="de">🇩🇪 DE</option>' +
       '        </select>' +
-      '        <img src="/static/logo.png" alt="UseFlow-FR Logo" class="login-logo">' +
-      '        <h1>UseFlow-FR</h1>' +
+      '        <img src="/static/logo.png" alt="Stremio RSS Catalog Logo" class="login-logo">' +
+      '        <h1>Stremio RSS Catalog</h1>' +
       '        <p class="subtitle" data-i18n="login_subtitle">Connexion à l\'interface d\'administration</p>' +
       '' +
       '        <form id="loginForm">' +
@@ -495,7 +507,7 @@ class WebUI {
       '<head>' +
       '    <meta charset="UTF-8">' +
       '    <meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-      '    <title>UseFlow-FR - Dashboard</title>' +
+      '    <title>Stremio RSS Catalog - Dashboard</title>' +
       '    <style>' +
       '        * { margin: 0; padding: 0; box-sizing: border-box; }' +
       '        :root {' +
@@ -844,7 +856,7 @@ class WebUI {
       '        <div class="header">' +
       '            <div class="header-left">' +
       '                <img src="/static/logo.png" alt="Logo" class="header-logo">' +
-      '                <h1>UseFlow-FR</h1>' +
+      '                <h1>Stremio RSS Catalog</h1>' +
       '            </div>' +
       '            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">' +
       '                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px; margin-right: 15px;">' +
@@ -876,7 +888,7 @@ class WebUI {
       '        </div>' +
       '        <div class="section" style="margin-bottom: 20px;">' +
       '            <p class="description-text" data-i18n="description_text" data-i18n-html="true">' +
-      '                UseFlow-FR est un addon de création de catalogues Stremio à partir de flux RSS. Il ne permet pas de lire du contenu, il faut pour cela utiliser des addons de stream tels que <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> ou <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> avec <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>' +
+      '                Stremio RSS Catalog est un addon de création de catalogues Stremio à partir de flux RSS. Il ne permet pas de lire du contenu, il faut pour cela utiliser des addons de stream tels que <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> ou <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> avec <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>' +
       '                Tutoriels sur <a href="https://upandclear.org" target="_blank">mon blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">exemple de stack</a> à auto-héberger, <a href="https://stremiofr.com/" target="_blank">instances</a> mises à disposition par la communauté StremioFR.' +
       '            </p>' +
       '        </div>' +
@@ -890,6 +902,10 @@ class WebUI {
       '                <div class="value">-</div>' +
       '            </div>' +
       '            <div class="stat-card">' +
+      '                <h3 data-i18n="stat_series">Séries</h3>' +
+      '                <div class="value">-</div>' +
+      '            </div>' +
+      '            <div class="stat-card">' +
       '                <h3 data-i18n="stat_indexed">Médias indexés</h3>' +
       '                <div class="value">-</div>' +
       '            </div>' +
@@ -897,9 +913,10 @@ class WebUI {
       '        <div class="section">' +
       '            <h2 data-i18n="sync_history_title">Historique des synchronisations</h2>' +
       '            <p class="description-text" data-i18n="sync_history_desc" data-i18n-html="true">' +
-      '                Pour chaque release, UseFlow-FR va chercher le média correspondant sur TMDB et l\'attribue ensuite à un catalogue Films ou Documentaires.<br>' +
+      '                Pour chaque release, Stremio RSS Catalog va chercher le média correspondant sur TMDB et l\'attribue ensuite à un catalogue Films ou Documentaires.<br>' +
       '                L\'écart entre les releases sources dans un flux RSS et les médias ajoutés dans les catalogues vient des releases qui n\'ont pas matché sur TMDB (nom erroné/différent de la fiche, pas de fiche, timeout TMDB, plusieurs médias du même nom etc) et de celles qui se réfèrent à un même média (rlz SD, HD, HDR, SDR, DV, UHD etc d\'un même film par exemple) et ne comptent donc pas.' +
-      '                Si une nouvelle release concerne des média déjà rattaché à un catalogue, ce media n\'est alors pas remis en avant dans les derniers ajouts du catalogue.' +
+      '                Si une nouvelle release concerne un média déjà rattaché à un catalogue, ce média n\'est alors pas remis en avant dans les derniers ajouts du catalogue.' +
+      '                Les séries sont regroupées par titre : plusieurs releases d\'une même série (épisodes, saisons) ne comptent que pour une seule entrée dans le catalogue.' +
       '            </p>' +
       '            <!-- Contrôles -->' +
       '            <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">' +
@@ -927,7 +944,7 @@ class WebUI {
       '                </div>' +
       '                <div style="margin-top: 20px; margin-bottom: 10px;">' +
       '                    <h3 data-i18n="config_rss_additional_title" style="margin: 0 0 5px 0;">Flux RSS additionnels</h3>' +
-      '                    <small style="color: #666; display: block; margin-bottom: 10px;" data-i18n="config_rss_additional_hint">Même fonctionnement que le flux principal : Films et Documentaires uniquement, basés sur TMDB (pas de séries).</small>' +
+      '                    <small style="color: #666; display: block; margin-bottom: 10px;" data-i18n="config_rss_additional_hint">Même fonctionnement que le flux principal : Films, Documentaires et Séries détectés automatiquement.</small>' +
       '                </div>' +
       '                <div id="additionalRssContainer"></div>' +
       '                <button type="button" class="btn" onclick="addRssField()" style="margin-bottom: 20px; background: linear-gradient(135deg, #48bb78, #38a169); font-size: 14px; padding: 8px 16px;" data-i18n="config_rss_add_btn">➕ Ajouter un flux RSS</button>' +
@@ -1088,12 +1105,28 @@ class WebUI {
     const intervalMs = interval * 60 * 1000;
     console.log('[Auto-Refresh] Activé - Intervalle: ' + interval + ' minutes');
     this.autoRefreshInterval = setInterval(async () => {
+      // Sécurité : si syncInProgress est bloqué depuis plus de 2h, on le reset
+      if (this.syncInProgress && this.syncStartedAt) {
+        const elapsed = Date.now() - this.syncStartedAt;
+        if (elapsed > 2 * 60 * 60 * 1000) {
+          console.warn('[Auto-Refresh] syncInProgress bloqué depuis ' + Math.round(elapsed / 60000) + ' min — reset forcé');
+          this.syncInProgress = false;
+          this.syncStartedAt = null;
+          if (this.syncStatus) this.syncStatus.running = false;
+        }
+      }
+
       if (!this.syncInProgress) {
         console.log('[Auto-Refresh] Lancement de la synchronisation automatique...');
+        this.syncInProgress = true;
+        this.syncStartedAt = Date.now();
         try {
           await this.runSync();
         } catch (error) {
           console.error('[Auto-Refresh] Erreur:', error);
+        } finally {
+          this.syncInProgress = false;
+          this.syncStartedAt = null;
         }
       } else {
         console.log('[Auto-Refresh] Synchronisation déjà en cours, passage au prochain cycle');
@@ -1111,7 +1144,7 @@ class WebUI {
 
   listen(port) {
     this.app.listen(port, () => {
-      console.log('\nUseFlow-FR démarré sur le port ' + port);
+      console.log('\nStremio RSS Catalog démarré sur le port ' + port);
       console.log('\nWebUI: http://localhost:' + port);
       console.log('Manifest: http://localhost:' + port + '/manifest.json\n');
     });

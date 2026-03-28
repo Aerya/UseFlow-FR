@@ -172,7 +172,9 @@ class TMDBMatcher {
   async matchItem(item) {
     try {
       let match = null;
-      if (item.type === 'movie') {
+      if (item.type === 'series') {
+        match = await this.searchTVShow(item.cleanName, item.year);
+      } else {
         match = await this.searchMovie(item.cleanName, item.year);
       }
       if (match && match.imdb_id) {
@@ -238,6 +240,20 @@ class TMDBMatcher {
         console.error(`indexer_rlz_id value:`, item.indexer_rlz_id);
         failed++;
         continue;
+      }
+
+      // Pour les séries : si le show est déjà en base (autre saison/épisode du même titre),
+      // on saute sans rappeler TMDB — on ne veut pas dupliquer la fiche
+      if (item.type === 'series') {
+        const existingByName = this.db.db.prepare(
+          'SELECT id FROM catalog_items WHERE catalog_type = ? AND name = ? COLLATE NOCASE LIMIT 1'
+        ).get('series', item.cleanName);
+        if (existingByName) {
+          console.log(`↩ Série déjà indexée (autre release) : ${item.cleanName}`);
+          matched++;
+          alreadyInDb++;
+          continue;
+        }
       }
 
       const match = await this.matchItem(item);

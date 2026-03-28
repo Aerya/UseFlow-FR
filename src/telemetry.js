@@ -28,7 +28,7 @@ async function startTelemetry() {
 
         const telemetry = new SHMClient({
             serverUrl: process.env.SHM_SERVER_URL || 'https://metrics.upandclear.org',
-            appName: 'UseFlow-FR',
+            appName: 'Stremio RSS Catalog',
             appVersion: require('../package.json').version || '1.0.0',
             environment: process.env.NODE_ENV || 'production',
             enabled: true,

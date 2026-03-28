@@ -1,5 +1,5 @@
 /**
- * UseFlow-FR Dashboard Logic
+ * Stremio RSS Catalog Dashboard Logic
  * Handles all client-side interactions, data loading, and UI updates.
  */
 
@@ -147,10 +147,11 @@ async function loadStats() {
         const stats = await response.json();
 
         const cards = document.querySelectorAll('.stat-card .value');
-        if (cards.length >= 3) {
+        if (cards.length >= 4) {
             cards[0].textContent = stats.films;
             cards[1].textContent = stats.documentaires;
-            cards[2].textContent = stats.total;
+            cards[2].textContent = stats.series;
+            cards[3].textContent = stats.total;
         }
     } catch (error) {
         console.error('Error loading stats:', error);
@@ -308,6 +309,10 @@ async function loadSyncHistory() {
                         <div class="history-stat-value" style="color: #667eea;">+${sync.documentaires_added}</div>
                     </div>
                     <div class="history-stat">
+                        <div class="history-stat-label">${t('sync_series')}</div>
+                        <div class="history-stat-value" style="color: #ed8936;">+${sync.series_added || 0}</div>
+                    </div>
+                    <div class="history-stat">
                         <div class="history-stat-label">${t('sync_failed')}</div>
                         <div class="history-stat-value" style="color: #e53e3e;">${sync.failed_items}</div>
                     </div>
@@ -424,6 +429,10 @@ function renderSyncHistoryItem(sync) {
             <div class="history-stat">
                 <div class="history-stat-label">${t('sync_docs')}</div>
                 <div class="history-stat-value" style="color: #667eea;">+${sync.documentaires_added}</div>
+            </div>
+            <div class="history-stat">
+                <div class="history-stat-label">${t('sync_series')}</div>
+                <div class="history-stat-value" style="color: #ed8936;">+${sync.series_added || 0}</div>
             </div>
             <div class="history-stat">
                 <div class="history-stat-label">${t('sync_failed')}</div>

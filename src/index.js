@@ -12,7 +12,7 @@ const { startTelemetry } = require('./telemetry');
 const PORT = process.env.PORT || 7000;
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, '..', 'data', 'addon.db');
 
-console.log('Démarrage...');
+console.log('Stremio RSS Catalog - Démarrage...');
 console.log(`Database: ${DB_PATH}`);
 
 // Initialiser la base de données
@@ -30,6 +30,15 @@ webui.listen(PORT);
 
 // Start anonymous telemetry (respects DO_NOT_TRACK)
 startTelemetry();
+
+// Empêcher les erreurs non catchées de tuer le process (et donc l'auto-refresh)
+process.on('uncaughtException', (error) => {
+  console.error('[FATAL] Uncaught exception:', error);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('[FATAL] Unhandled promise rejection:', reason);
+});
 
 // Gestion propre de l'arrêt
 process.on('SIGINT', () => {

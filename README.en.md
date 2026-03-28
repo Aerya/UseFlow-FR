@@ -1,26 +1,27 @@
-<h1 align="center">UseFlow-FR</h1>
+<h1 align="center">Stremio RSS Catalog</h1>
 
 <p align="center">
   <a href="./README.md">🇫🇷 Français</a> · <a href="./README.de.md">🇩🇪 Deutsch</a>
 </p>
 
-A Stremio addon for creating **Movies** and **Documentaries** catalogs from RSS feeds, with automatic TMDB matching and a web management interface.
+A Stremio addon for creating **Movies**, **Documentaries** and **Series** catalogs from RSS feeds, with automatic TMDB matching and a web management interface.
 
 Currently, only a private Usenet indexer is fully supported. I plan to integrate other RSS feeds in the future — some may already work, but I cannot guarantee reliability.
 
 
 <p align="center">
-  <img src="src/public/logo.png" alt="UseFlow-FR Logo" width="250">
+  <img src="src/public/logo.png" alt="Stremio RSS Catalog Logo" width="250">
 </p>
 
 ## Blog post with screenshots
-[UseFlow-FR: my RSS-to-Stremio-catalogs addon](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/) (French)
+[Stremio RSS Catalog: my RSS-to-Stremio-catalogs addon](https://upandclear.org/2025/11/20/useflow-fr-mon-addon-de-conversion-de-rss-en-catalogues-stremio/) (French)
 
 
 ## Features
 
-- ✅ **2 separate catalogs**: Movies and Documentaries
-- ✅ **Automatic TMDB matching**: Fetches metadata (posters, synopsis, genres, etc.)
+- ✅ **3 separate catalogs**: Movies, Documentaries and Series
+- ✅ **Automatic type detection**: Movies, documentaries and series identified from the release name (S01E01, Season, etc.)
+- ✅ **Automatic TMDB matching**: Fetches metadata (posters, synopsis, genres, etc.) — series matched via TMDB's TV API
 - ✅ **RPDB support**: Custom posters with Rating Poster Database (optional)
 - ✅ **IMDB ID support**: Compatible with all Stremio streaming addons
 - ✅ **Full WebUI**: Modern administration interface with authentication
@@ -53,16 +54,20 @@ Limited to content available in French (VF).
 
 ### Release Parsing
 The addon automatically extracts:
-- The clean content name
+- The clean content name (technical tags stripped: resolution, codec, language, team…)
 - The release year
-- The type (movie, documentary)
+- The type: **movie**, **documentary** or **series** (detected via patterns `S01E01`, `S01`, `Season N`)
+- For series, the season/episode part is removed from the name before the TMDB search
 
 ### TMDB Matching
 For each item:
-1. Search TMDB with the cleaned name and year
+1. Search TMDB with the cleaned name and year — using the **movie** API for films/docs, the **tv** API for series
 2. Retrieve the IMDB ID via TMDB's external_ids
 3. If an IMDB ID is found → added to catalog
 4. If no IMDB ID → item is skipped
+
+For series, multiple releases of the same show (different episodes or seasons) create only **one entry** in the catalog — grouped by title.
+
 This ensures that **only content compatible with streaming addons** is added.
 
 ### RPDB Posters
@@ -110,7 +115,6 @@ services:
 ### Ideas Under Consideration
 Depending on motivation and skills
 
-- **Series support**: TV series RSS feed processing
 - **Genre filtering**: To enhance search capabilities
 - **Advanced statistics**: Catalog/source graphs
 

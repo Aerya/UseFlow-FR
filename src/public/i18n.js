@@ -1,5 +1,5 @@
 /**
- * UseFlow-FR i18n System
+ * Stremio RSS Catalog i18n System
  * Supports: FR (default), EN, DE
  */
 
@@ -18,16 +18,17 @@ const translations = {
     logout: "Déconnexion",
 
     // Description
-    description_text: 'UseFlow-FR est un addon de création de catalogues Stremio à partir de flux RSS. Il ne permet pas de lire du contenu, il faut pour cela utiliser des addons de stream tels que <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> ou <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> avec <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Tutoriels sur <a href="https://upandclear.org" target="_blank">mon blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">exemple de stack</a> à auto-héberger, <a href="https://stremiofr.com/" target="_blank">instances</a> mises à disposition par la communauté StremioFR.',
+    description_text: 'Stremio RSS Catalog est un addon de création de catalogues Stremio à partir de flux RSS. Il ne permet pas de lire du contenu, il faut pour cela utiliser des addons de stream tels que <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> ou <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> avec <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Tutoriels sur <a href="https://upandclear.org" target="_blank">mon blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">exemple de stack</a> à auto-héberger, <a href="https://stremiofr.com/" target="_blank">instances</a> mises à disposition par la communauté StremioFR.',
 
     // Stats
     stat_films: "Films",
     stat_documentaires: "Documentaires",
+    stat_series: "Séries",
     stat_indexed: "Médias indexés",
 
     // Sync history
     sync_history_title: "Historique des synchronisations",
-    sync_history_desc: "Pour chaque release, UseFlow-FR va chercher le média correspondant sur TMDB et l'attribue ensuite à un catalogue Films ou Documentaires.<br>L'écart entre les releases sources dans un flux RSS et les médias ajoutés dans les catalogues vient des releases qui n'ont pas matché sur TMDB (nom erroné/différent de la fiche, pas de fiche, timeout TMDB, plusieurs médias du même nom etc) et de celles qui se réfèrent à un même média (rlz SD, HD, HDR, SDR, DV, UHD etc d'un même film par exemple) et ne comptent donc pas. Si une nouvelle release concerne des média déjà rattaché à un catalogue, ce media n'est alors pas remis en avant dans les derniers ajouts du catalogue.",
+    sync_history_desc: "Pour chaque release, Stremio RSS Catalog va chercher le média correspondant sur TMDB et l'attribue ensuite à un catalogue Films ou Documentaires.<br>L'écart entre les releases sources dans un flux RSS et les médias ajoutés dans les catalogues vient des releases qui n'ont pas matché sur TMDB (nom erroné/différent de la fiche, pas de fiche, timeout TMDB, plusieurs médias du même nom etc) et de celles qui se réfèrent à un même média (rlz SD, HD, HDR, SDR, DV, UHD etc d'un même film par exemple) et ne comptent donc pas. Si une nouvelle release concerne des média déjà rattaché à un catalogue, ce media n'est alors pas remis en avant dans les derniers ajouts du catalogue.",
     sync_browse: "Parcourir :",
     sync_last_3: "Les 3 dernières",
     sync_loading: "Chargement...",
@@ -46,15 +47,16 @@ const translations = {
     sync_new: "Nouvelles",
     sync_films: "Films",
     sync_docs: "Docs",
+    sync_series: "Séries",
     sync_failed: "Non traitées",
 
     // Config
     config_title: "Configuration",
     config_note: "Cet outil ne traite que les releases taggées FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ.",
-    config_rss_films: "Flux RSS de Films ou Documentaires",
+    config_rss_films: "Flux RSS de Films, Documentaires ou Séries",
     config_rss_films_hint: "Incluant votre clé API ou passkey",
     config_rss_additional_title: "Flux RSS additionnels",
-    config_rss_additional_hint: "Même fonctionnement que le flux principal : Films et Documentaires uniquement, basés sur TMDB (pas de séries).",
+    config_rss_additional_hint: "Même fonctionnement que le flux principal : Films, Documentaires et Séries détectés automatiquement.",
     config_rss_add_btn: "➕ Ajouter un flux RSS",
     config_rss_remove_btn: "Supprimer",
     config_tmdb_key: "Clé API TMDB",
@@ -125,16 +127,17 @@ const translations = {
     logout: "Logout",
 
     // Description
-    description_text: 'UseFlow-FR is a Stremio catalog creation addon from RSS feeds. It does not play content; for that, use streaming addons such as <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> or <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> with <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Tutorials on <a href="https://upandclear.org" target="_blank">my blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">stack example</a> to self-host, <a href="https://stremiofr.com/" target="_blank">instances</a> shared by the StremioFR community.',
+    description_text: 'Stremio RSS Catalog is a Stremio catalog creation addon from RSS feeds. It does not play content; for that, use streaming addons such as <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> or <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> with <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Tutorials on <a href="https://upandclear.org" target="_blank">my blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">stack example</a> to self-host, <a href="https://stremiofr.com/" target="_blank">instances</a> shared by the StremioFR community.',
 
     // Stats
     stat_films: "Movies",
     stat_documentaires: "Documentaries",
+    stat_series: "Series",
     stat_indexed: "Indexed media",
 
     // Sync history
     sync_history_title: "Synchronization history",
-    sync_history_desc: "For each release, UseFlow-FR searches for the corresponding media on TMDB and assigns it to a Movies or Documentaries catalog.<br>The gap between source releases in an RSS feed and media added to catalogs comes from releases that didn't match on TMDB (wrong/different name, no listing, TMDB timeout, multiple media with same name, etc.) and those referring to the same media (SD, HD, HDR, SDR, DV, UHD releases of the same movie for example) which are not counted. If a new release concerns media already in a catalog, it won't be pushed to the top of recent additions.",
+    sync_history_desc: "For each release, Stremio RSS Catalog searches for the corresponding media on TMDB and assigns it to a Movies or Documentaries catalog.<br>The gap between source releases in an RSS feed and media added to catalogs comes from releases that didn't match on TMDB (wrong/different name, no listing, TMDB timeout, multiple media with same name, etc.) and those referring to the same media (SD, HD, HDR, SDR, DV, UHD releases of the same movie for example) which are not counted. If a new release concerns media already in a catalog, it won't be pushed to the top of recent additions.",
     sync_browse: "Browse:",
     sync_last_3: "Last 3",
     sync_loading: "Loading...",
@@ -153,15 +156,16 @@ const translations = {
     sync_new: "New",
     sync_films: "Movies",
     sync_docs: "Docs",
+    sync_series: "Series",
     sync_failed: "Unprocessed",
 
     // Config
     config_title: "Configuration",
     config_note: "This tool only processes releases tagged FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ.",
-    config_rss_films: "Movies or Documentaries RSS Feed",
+    config_rss_films: "Movies, Documentaries or Series RSS Feed",
     config_rss_films_hint: "Including your API key or passkey",
     config_rss_additional_title: "Additional RSS Feeds",
-    config_rss_additional_hint: "Same behavior as the main feed: Movies and Documentaries only, based on TMDB (no series).",
+    config_rss_additional_hint: "Same behavior as the main feed: Movies, Documentaries and Series detected automatically.",
     config_rss_add_btn: "➕ Add an RSS feed",
     config_rss_remove_btn: "Remove",
     config_tmdb_key: "TMDB API Key",
@@ -232,16 +236,17 @@ const translations = {
     logout: "Abmelden",
 
     // Description
-    description_text: 'UseFlow-FR ist ein Stremio-Addon zur Erstellung von Katalogen aus RSS-Feeds. Es spielt keine Inhalte ab; dafür verwenden Sie Streaming-Addons wie <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> oder <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> mit <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Anleitungen auf <a href="https://upandclear.org" target="_blank">meinem Blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">Stack-Beispiel</a> zum Selbsthosten, <a href="https://stremiofr.com/" target="_blank">Instanzen</a> von der StremioFR-Community bereitgestellt.',
+    description_text: 'Stremio RSS Catalog ist ein Stremio-Addon zur Erstellung von Katalogen aus RSS-Feeds. Es spielt keine Inhalte ab; dafür verwenden Sie Streaming-Addons wie <a href="https://github.com/Telkaoss/stream-fusion" target="_blank">StreamFusion (BitTorrent)</a> oder <a href="https://github.com/Sanket9225/UsenetStreamer" target="_blank">Usenet-Streamer</a> mit <a href="https://github.com/nzbdav-dev/nzbdav" target="_blank">NZBdav (Usenet)</a>.<br>Anleitungen auf <a href="https://upandclear.org" target="_blank">meinem Blog</a>, <a href="https://github.com/Aerya/Stremio-Stack" target="_blank">Stack-Beispiel</a> zum Selbsthosten, <a href="https://stremiofr.com/" target="_blank">Instanzen</a> von der StremioFR-Community bereitgestellt.',
 
     // Stats
     stat_films: "Filme",
     stat_documentaires: "Dokumentarfilme",
+    stat_series: "Serien",
     stat_indexed: "Indexierte Medien",
 
     // Sync history
     sync_history_title: "Synchronisierungsverlauf",
-    sync_history_desc: "Für jede Veröffentlichung sucht UseFlow-FR das entsprechende Medium auf TMDB und ordnet es einem Filme- oder Dokumentarfilm-Katalog zu.<br>Die Differenz zwischen den Quell-Veröffentlichungen im RSS-Feed und den hinzugefügten Medien ergibt sich aus Veröffentlichungen, die nicht auf TMDB übereinstimmen (falscher/anderer Name, kein Eintrag, TMDB-Timeout, mehrere Medien mit gleichem Namen usw.) und solchen, die sich auf dasselbe Medium beziehen (SD, HD, HDR, SDR, DV, UHD-Versionen desselben Films), die nicht gezählt werden.",
+    sync_history_desc: "Für jede Veröffentlichung sucht Stremio RSS Catalog das entsprechende Medium auf TMDB und ordnet es einem Filme- oder Dokumentarfilm-Katalog zu.<br>Die Differenz zwischen den Quell-Veröffentlichungen im RSS-Feed und den hinzugefügten Medien ergibt sich aus Veröffentlichungen, die nicht auf TMDB übereinstimmen (falscher/anderer Name, kein Eintrag, TMDB-Timeout, mehrere Medien mit gleichem Namen usw.) und solchen, die sich auf dasselbe Medium beziehen (SD, HD, HDR, SDR, DV, UHD-Versionen desselben Films), die nicht gezählt werden.",
     sync_browse: "Durchsuchen:",
     sync_last_3: "Die letzten 3",
     sync_loading: "Laden...",
@@ -260,15 +265,16 @@ const translations = {
     sync_new: "Neu",
     sync_films: "Filme",
     sync_docs: "Dokus",
+    sync_series: "Serien",
     sync_failed: "Nicht verarbeitet",
 
     // Config
     config_title: "Konfiguration",
     config_note: "Dieses Tool verarbeitet nur Releases mit FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ-Tags.",
-    config_rss_films: "RSS-Feed für Filme oder Dokumentarfilme",
+    config_rss_films: "RSS-Feed für Filme, Dokumentarfilme oder Serien",
     config_rss_films_hint: "Einschließlich Ihres API-Schlüssels oder Passkeys",
     config_rss_additional_title: "Zusätzliche RSS-Feeds",
-    config_rss_additional_hint: "Gleiche Funktionsweise wie der Haupt-Feed: nur Filme und Dokumentarfilme, basierend auf TMDB (keine Serien).",
+    config_rss_additional_hint: "Gleiche Funktionsweise wie der Haupt-Feed: Filme, Dokumentarfilme und Serien werden automatisch erkannt.",
     config_rss_add_btn: "➕ RSS-Feed hinzufügen",
     config_rss_remove_btn: "Entfernen",
     config_tmdb_key: "TMDB API-Schlüssel",
