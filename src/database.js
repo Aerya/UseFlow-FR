@@ -110,7 +110,8 @@ class DatabaseManager {
       discord_enhanced_notifications_enabled: 'false',
       discord_rpdb_posters_enabled: 'false',
       rpdb_enabled: 'false',
-      rpdb_api_key: ''
+      rpdb_api_key: '',
+      required_tags: 'FRENCH,MULTi,TRUEFRENCH,VOF,VFF,VFI,VFQ'
     };
 
     const stmt = this.db.prepare('INSERT OR IGNORE INTO config (key, value) VALUES (?, ?)');

@@ -119,6 +119,13 @@ class RSSParser {
     return info;
   }
 
+  filterByRequiredTags(title) {
+    const raw = this.db.getConfig('required_tags') || '';
+    const tags = raw.split(',').map(t => t.trim()).filter(t => t.length > 0);
+    if (tags.length === 0) return true; // no filter configured
+    return tags.some(tag => new RegExp('\\b' + tag + '\\b', 'i').test(title));
+  }
+
   applyForce(catalogType, type, force) {
     if (!force || force === 'auto') return { catalogType, type };
     if (force === 'films') return { catalogType: 'films', type: 'movie' };
@@ -139,6 +146,7 @@ class RSSParser {
 
     const parsed = [];
     for (const item of items) {
+      if (!this.filterByRequiredTags(item.title)) continue;
       const info = this.parseReleaseName(item.title);
       const releaseId = typeof item.guid === 'object' && item.guid._ ? item.guid._ : (item.guid || item.link);
       const detected = this.applyForce(
@@ -189,6 +197,7 @@ class RSSParser {
         const items = await this.fetchRSS(rssUrl.trim());
 
         for (const item of items) {
+          if (!this.filterByRequiredTags(item.title)) continue;
           const info = this.parseReleaseName(item.title);
           const releaseId = typeof item.guid === 'object' && item.guid._ ? item.guid._ : (item.guid || item.link);
           const detected = this.applyForce(

@@ -957,6 +957,11 @@ class WebUI {
       '                <div id="additionalRssContainer"></div>' +
       '                <button type="button" class="btn" onclick="addRssField()" style="margin-bottom: 20px; background: linear-gradient(135deg, #48bb78, #38a169); font-size: 14px; padding: 8px 16px;" data-i18n="config_rss_add_btn">➕ Ajouter un flux RSS</button>' +
       '                <div class="form-group">' +
+      '                    <label for="required_tags" data-i18n="config_required_tags">Tags requis</label>' +
+      '                    <input type="text" id="required_tags" name="required_tags" placeholder="FRENCH,MULTi,TRUEFRENCH,VOF,VFF,VFI,VFQ">' +
+      '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_required_tags_hint">Séparés par des virgules. Un release doit contenir au moins un de ces tags pour être traité. Vider pour tout accepter.</small>' +
+      '                </div>' +
+      '                <div class="form-group">' +
       '                    <label for="tmdb_api_key" data-i18n="config_tmdb_key">Clé API TMDB</label>' +
       '                    <input type="text" id="tmdb_api_key" name="tmdb_api_key" required>' +
       '                </div>' +

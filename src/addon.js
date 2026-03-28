@@ -63,7 +63,7 @@ class StremioAddon {
       }
 
       const skip = parseInt(extra?.skip) || 0;
-      const limit = 10000;
+      const limit = 100;
       let items;
 
       // Fetch one extra item to detect if there are more pages
@@ -88,7 +88,7 @@ class StremioAddon {
 
       console.log(`Returning ${metas.length} items for catalog ${id} (skip=${skip}, hasMore=${hasMore})`);
 
-      return { metas };
+      return { metas, hasMore };
     });
   }
 
@@ -109,7 +109,7 @@ class StremioAddon {
       }
 
       const skip = parseInt(extra?.skip) || 0;
-      const limit = 10000;
+      const limit = 100;
       let items;
 
       // Fetch one extra item to detect if there are more pages
@@ -134,7 +134,7 @@ class StremioAddon {
 
       console.log(`Returning ${metas.length} items for catalog ${id} (skip=${skip}, hasMore=${hasMore})`);
 
-      return { metas };
+      return { metas, hasMore };
     } catch (error) {
       console.error('Error in catalog handler:', error);
       return { metas: [] };

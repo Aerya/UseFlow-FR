@@ -52,7 +52,7 @@ const translations = {
 
     // Config
     config_title: "Configuration",
-    config_note: "Cet outil ne traite que les releases taggées FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ.",
+    config_note: "Par défaut, seules les releases taggées FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ sont traitées. Modifiable via le champ « Tags requis » ci-dessous.",
     config_rss_films: "Flux RSS",
     config_rss_films_hint: "Incluant votre clé API ou passkey",
     config_rss_force_auto: "Auto",
@@ -63,6 +63,8 @@ const translations = {
     config_rss_additional_hint: "Même fonctionnement que le flux principal : Films, Documentaires et Séries détectés automatiquement.",
     config_rss_add_btn: "➕ Ajouter un flux RSS",
     config_rss_remove_btn: "Supprimer",
+    config_required_tags: "Tags requis",
+    config_required_tags_hint: "Séparés par des virgules. Un release doit contenir au moins un de ces tags pour être traité. Vider pour tout accepter.",
     config_tmdb_key: "Clé API TMDB",
     config_rpdb_title: "Rating Poster DataBase aka RPDB",
     config_rpdb_enable: "Activer",
@@ -165,7 +167,7 @@ const translations = {
 
     // Config
     config_title: "Configuration",
-    config_note: "This tool only processes releases tagged FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ.",
+    config_note: "By default, only releases tagged FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ are processed. Configurable via the \"Required tags\" field below.",
     config_rss_films: "RSS Feed",
     config_rss_films_hint: "Including your API key or passkey",
     config_rss_force_auto: "Auto",
@@ -176,6 +178,8 @@ const translations = {
     config_rss_additional_hint: "Same behavior as the main feed: Movies, Documentaries and Series detected automatically.",
     config_rss_add_btn: "➕ Add an RSS feed",
     config_rss_remove_btn: "Remove",
+    config_required_tags: "Required tags",
+    config_required_tags_hint: "Comma-separated. A release must contain at least one of these tags to be processed. Leave empty to accept everything.",
     config_tmdb_key: "TMDB API Key",
     config_rpdb_title: "Rating Poster DataBase aka RPDB",
     config_rpdb_enable: "Enable",
@@ -278,7 +282,7 @@ const translations = {
 
     // Config
     config_title: "Konfiguration",
-    config_note: "Dieses Tool verarbeitet nur Releases mit FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ-Tags.",
+    config_note: "Standardmäßig werden nur Releases mit FRENCH/MULTi/TRUEFRENCH/VOF/VFF/VFI/VFQ-Tags verarbeitet. Konfigurierbar über das Feld „Erforderliche Tags" unten.",
     config_rss_films: "RSS-Feed",
     config_rss_films_hint: "Einschließlich Ihres API-Schlüssels oder Passkeys",
     config_rss_force_auto: "Auto",
@@ -289,6 +293,8 @@ const translations = {
     config_rss_additional_hint: "Gleiche Funktionsweise wie der Haupt-Feed: Filme, Dokumentarfilme und Serien werden automatisch erkannt.",
     config_rss_add_btn: "➕ RSS-Feed hinzufügen",
     config_rss_remove_btn: "Entfernen",
+    config_required_tags: "Erforderliche Tags",
+    config_required_tags_hint: "Durch Komma getrennt. Ein Release muss mindestens einen dieser Tags enthalten, um verarbeitet zu werden. Leer lassen, um alles zu akzeptieren.",
     config_tmdb_key: "TMDB API-Schlüssel",
     config_rpdb_title: "Rating Poster DataBase aka RPDB",
     config_rpdb_enable: "Aktivieren",

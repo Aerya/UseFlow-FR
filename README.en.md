@@ -27,8 +27,6 @@
 ---
 
 > A self-hosted Stremio addon that parses your RSS feeds, automatically identifies Movies, Documentaries and Series, matches them on TMDB, and exposes them as catalogs in Stremio.
->
-> Currently, only a private Usenet indexer is fully supported. Other feeds may work, but without guarantee.
 
 ---
 
@@ -36,6 +34,7 @@
 
 - 🆕 **Renamed**: the addon is now called **Stremio RSS Catalog**
 - 📺 **Series support**: automatic detection from release names (`S01E01`, `Season N`…), matched via TMDB's TV API, grouped by title (one entry per show regardless of how many episodes/seasons appear in the feed)
+- 🏷️ **Configurable tags**: required tags (FRENCH, MULTi, 1080p…) can now be edited directly from the WebUI, no code change needed
 
 ---
 
@@ -52,9 +51,10 @@
 | 🌐 **WebUI** | Full admin interface, 🇫🇷 🇬🇧 🇩🇪 |
 | 🔒 **Proxy** | HTTP / HTTPS / SOCKS4 / SOCKS5 |
 | 💾 **SQLite** | Persistent data, incremental content |
+| 🏷️ **Tag filtering** | Configurable required tags from the WebUI (FRENCH, MULTi, 1080p…) |
 | 🐳 **Docker** | Multi-arch image `linux/amd64` + `linux/arm64` |
 
-> Limited to French-language content (FRENCH / MULTi / TRUEFRENCH…)
+> Defaults to French-language content (FRENCH / MULTi / TRUEFRENCH / VOF / VFF / VFI / VFQ) — configurable from the WebUI
 
 ---
 
