@@ -6,7 +6,6 @@ const RSSParser = require('./rss-parser');
 const TMDBMatcher = require('./tmdb-matcher');
 const StremioAddon = require('./addon');
 const WebUI = require('./webui');
-const { startTelemetry } = require('./telemetry');
 
 // Configuration
 const PORT = process.env.PORT || 7000;
@@ -27,9 +26,6 @@ const webui = new WebUI(db, rssParser, tmdbMatcher, stremioAddon);
 
 // Démarrer le serveur
 webui.listen(PORT);
-
-// Start anonymous telemetry (respects DO_NOT_TRACK)
-startTelemetry();
 
 // Empêcher les erreurs non catchées de tuer le process (et donc l'auto-refresh)
 process.on('uncaughtException', (error) => {
