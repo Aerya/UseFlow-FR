@@ -70,16 +70,17 @@ function addRssField(value, force) {
     input.className = 'additional-rss-url';
     input.placeholder = 'https://domain.tld/rssnew?cats=...&key=...';
     input.style.flex = '1';
+    input.style.minWidth = '0';
     if (value) input.value = value;
 
     const select = document.createElement('select');
     select.className = 'additional-rss-force';
-    select.style.cssText = 'padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;';
+    select.style.cssText = 'flex-shrink: 0; width: 160px; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;';
     [
-        { value: 'auto', label: t('config_rss_force_auto') },
-        { value: 'films', label: t('config_rss_force_films') },
-        { value: 'series', label: t('config_rss_force_series') },
-        { value: 'documentaires', label: t('config_rss_force_docs') }
+        { value: 'auto', label: 'Tout' },
+        { value: 'films', label: 'Films' },
+        { value: 'series', label: 'Séries' },
+        { value: 'documentaires', label: 'Documentaires' }
     ].forEach(opt => {
         const o = document.createElement('option');
         o.value = opt.value;

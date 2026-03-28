@@ -938,12 +938,12 @@ class WebUI {
       '                <div class="form-group">' +
       '                    <label for="rss_films_url" data-i18n="config_rss_films">Flux RSS</label>' +
       '                    <div style="display: flex; gap: 10px; align-items: center;">' +
-      '                        <input type="url" id="rss_films_url" name="rss_films_url" required placeholder="https://domain.tld/rssnew?cats=...&key=..." style="flex: 1;">' +
-      '                        <select id="rss_films_force" name="rss_films_force" style="padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;">' +
-      '                            <option value="auto" data-i18n="config_rss_force_auto">Auto</option>' +
-      '                            <option value="films" data-i18n="config_rss_force_films">Films</option>' +
-      '                            <option value="series" data-i18n="config_rss_force_series">Séries</option>' +
-      '                            <option value="documentaires" data-i18n="config_rss_force_docs">Documentaires</option>' +
+      '                        <input type="url" id="rss_films_url" name="rss_films_url" required placeholder="https://domain.tld/rssnew?cats=...&key=..." style="flex: 1; min-width: 0;">' +
+      '                        <select id="rss_films_force" name="rss_films_force" style="flex-shrink: 0; width: 160px; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 13px; cursor: pointer;">' +
+      '                            <option value="auto">Tout</option>' +
+      '                            <option value="films">Films</option>' +
+      '                            <option value="series">Séries</option>' +
+      '                            <option value="documentaires">Documentaires</option>' +
       '                        </select>' +
       '                    </div>' +
       '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_rss_films_hint">' +
@@ -957,9 +957,8 @@ class WebUI {
       '                <div id="additionalRssContainer"></div>' +
       '                <button type="button" class="btn" onclick="addRssField()" style="margin-bottom: 20px; background: linear-gradient(135deg, #48bb78, #38a169); font-size: 14px; padding: 8px 16px;" data-i18n="config_rss_add_btn">➕ Ajouter un flux RSS</button>' +
       '                <div class="form-group">' +
-      '                    <label for="required_tags" data-i18n="config_required_tags">Tags requis</label>' +
+      '                    <label for="required_tags">Tags de parsing des flux RSS (seules les releases avec ces tags seront traitées pour le parsing)</label>' +
       '                    <input type="text" id="required_tags" name="required_tags" placeholder="FRENCH,MULTi,TRUEFRENCH,VOF,VFF,VFI,VFQ">' +
-      '                    <small style="color: #666; display: block; margin-top: 5px;" data-i18n="config_required_tags_hint">Séparés par des virgules. Un release doit contenir au moins un de ces tags pour être traité. Vider pour tout accepter.</small>' +
       '                </div>' +
       '                <div class="form-group">' +
       '                    <label for="tmdb_api_key" data-i18n="config_tmdb_key">Clé API TMDB</label>' +
