@@ -1103,6 +1103,35 @@ class WebUI {
       '</html>';
   }
 
+  async runAutoSync() {
+    // Sécurité : si syncInProgress est bloqué depuis plus de 2h, on le reset
+    if (this.syncInProgress && this.syncStartedAt) {
+      const elapsed = Date.now() - this.syncStartedAt;
+      if (elapsed > 2 * 60 * 60 * 1000) {
+        console.warn('[Auto-Refresh] syncInProgress bloqué depuis ' + Math.round(elapsed / 60000) + ' min — reset forcé');
+        this.syncInProgress = false;
+        this.syncStartedAt = null;
+        if (this.syncStatus) this.syncStatus.running = false;
+      }
+    }
+
+    if (!this.syncInProgress) {
+      console.log('[Auto-Refresh] Lancement de la synchronisation automatique...');
+      this.syncInProgress = true;
+      this.syncStartedAt = Date.now();
+      try {
+        await this.runSync();
+      } catch (error) {
+        console.error('[Auto-Refresh] Erreur:', error);
+      } finally {
+        this.syncInProgress = false;
+        this.syncStartedAt = null;
+      }
+    } else {
+      console.log('[Auto-Refresh] Synchronisation déjà en cours, passage au prochain cycle');
+    }
+  }
+
   startAutoRefresh() {
     if (this.autoRefreshInterval) {
       clearInterval(this.autoRefreshInterval);
@@ -1113,37 +1142,15 @@ class WebUI {
       console.log('[Auto-Refresh] Désactivé');
       return;
     }
-    const interval = parseInt(this.db.getConfig('refresh_interval')) || 60;
+    const interval = parseInt(this.db.getConfig('refresh_interval')) || 180;
     const intervalMs = interval * 60 * 1000;
-    console.log('[Auto-Refresh] Activé - Intervalle: ' + interval + ' minutes');
-    this.autoRefreshInterval = setInterval(async () => {
-      // Sécurité : si syncInProgress est bloqué depuis plus de 2h, on le reset
-      if (this.syncInProgress && this.syncStartedAt) {
-        const elapsed = Date.now() - this.syncStartedAt;
-        if (elapsed > 2 * 60 * 60 * 1000) {
-          console.warn('[Auto-Refresh] syncInProgress bloqué depuis ' + Math.round(elapsed / 60000) + ' min — reset forcé');
-          this.syncInProgress = false;
-          this.syncStartedAt = null;
-          if (this.syncStatus) this.syncStatus.running = false;
-        }
-      }
+    console.log('[Auto-Refresh] Activé - Intervalle: ' + interval + ' minutes - Sync immédiate au démarrage');
 
-      if (!this.syncInProgress) {
-        console.log('[Auto-Refresh] Lancement de la synchronisation automatique...');
-        this.syncInProgress = true;
-        this.syncStartedAt = Date.now();
-        try {
-          await this.runSync();
-        } catch (error) {
-          console.error('[Auto-Refresh] Erreur:', error);
-        } finally {
-          this.syncInProgress = false;
-          this.syncStartedAt = null;
-        }
-      } else {
-        console.log('[Auto-Refresh] Synchronisation déjà en cours, passage au prochain cycle');
-      }
-    }, intervalMs);
+    // Sync immédiate au démarrage
+    this.runAutoSync();
+
+    // Puis toutes les `interval` minutes
+    this.autoRefreshInterval = setInterval(() => this.runAutoSync(), intervalMs);
   }
 
   stopAutoRefresh() {
