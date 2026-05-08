@@ -1,5 +1,5 @@
 {
-  "name": "UseFlow-FR",
+  "name": "stremio-rss-catalogs",
   "version": "1.0.0",
   "description": "Addon Stremio de création de catalogues depuis des flux RSS",
   "main": "src/index.js",

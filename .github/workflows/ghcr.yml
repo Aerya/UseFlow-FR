@@ -34,7 +34,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/aerya/useflow-fr
+          images: ghcr.io/aerya/stremio-rss-catalogs
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=ref,event=tag
