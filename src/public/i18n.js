@@ -24,7 +24,6 @@ const translations = {
     stat_films: "Films",
     stat_documentaires: "Documentaires",
     stat_series: "Séries",
-    stat_emissions: "Émissions TV",
     stat_indexed: "Médias indexés",
 
     // Sync history
@@ -49,7 +48,6 @@ const translations = {
     sync_films: "Films",
     sync_docs: "Docs",
     sync_series: "Séries",
-    sync_emissions: "Émissions",
     sync_failed: "Non traitées",
 
     // Config
@@ -61,8 +59,6 @@ const translations = {
     config_rss_add_btn: "➕ Ajouter un flux RSS",
     config_rss_remove_btn: "Supprimer",
     config_tmdb_key: "Clé API TMDB",
-    config_tvdb_key: "Clé API TVDB (optionnel)",
-    config_tvdb_hint: "Optionnel. Source complémentaire à TMDB pour la détection des documentaires et fallback pour les séries non trouvées. Clé gratuite sur thetvdb.com.",
     config_rpdb_title: "Rating Poster DataBase aka RPDB",
     config_rpdb_enable: "Activer",
     config_rpdb_examples: "exemples",
@@ -111,59 +107,6 @@ const translations = {
     install_copied: "URL copiée !",
     install_copy_error: "Erreur lors de la copie",
 
-    // Navigation
-    nav_overview: "Vue d'ensemble",
-    nav_library: "Médiathèque",
-    nav_sources: "Sources",
-    nav_sync: "Synchronisation",
-    nav_failures: "Échecs",
-    nav_config: "Configuration",
-
-    // Library
-    library_search_placeholder: "Rechercher un titre...",
-    library_all: "Tous",
-    library_no_results: "Aucun résultat",
-    library_releases_none: "Aucune release enregistrée",
-    library_col_name: "Nom de release",
-    library_col_quality: "Qualité",
-    library_col_hash: "Hash",
-    library_col_date: "Date",
-
-    // Sources
-    sources_url: "Flux RSS",
-    sources_releases: "Releases",
-    sources_media: "Médias",
-    sources_last_seen: "Dernier ajout",
-    sources_none: "Aucune source détectée — lancez une synchronisation d'abord",
-
-    // Sync extras
-    sync_auto_enabled: "Activée",
-    sync_auto_disabled: "Désactivée",
-
-    // Failed
-    failed_retry_btn: "♻️ Retry tout",
-    failed_clear_btn: "🗑 Vider",
-    failed_none: "Aucune release échouée. 🎉",
-
-    // Config extras
-    config_save_btn: "💾 Enregistrer",
-    config_saved_ok: "Configuration enregistrée",
-    config_saved_err: "Erreur lors de l'enregistrement",
-    config_discord_title: "Discord",
-    config_discord_enable: "Activer les notifications",
-    config_discord_webhook: "URL du webhook Discord",
-    config_discord_enhanced: "Notifications enrichies (galerie d'affiches)",
-    config_discord_rpdb: "Affiches RPDB dans Discord",
-
-    // Integrations
-    integrations_title: "🔗 Intégrations rapides",
-    integrations_hint: "Entrez l'URL de base et la clé API pour générer automatiquement les flux RSS et les ajouter à la liste.",
-    integrations_url_placeholder: "http://localhost:...",
-    integrations_add_all: "Tout",
-    integrations_add_films: "Films",
-    integrations_add_series: "Séries",
-    integrations_missing_fields: "Veuillez renseigner l'URL et la clé API.",
-
     // Misc
     by: "Par",
     donate: "M'offrir des Dragibus :-)",
@@ -189,7 +132,6 @@ const translations = {
     stat_films: "Movies",
     stat_documentaires: "Documentaries",
     stat_series: "Series",
-    stat_emissions: "TV Shows",
     stat_indexed: "Indexed media",
 
     // Sync history
@@ -214,7 +156,6 @@ const translations = {
     sync_films: "Movies",
     sync_docs: "Docs",
     sync_series: "Series",
-    sync_emissions: "TV Shows",
     sync_failed: "Unprocessed",
 
     // Config
@@ -226,8 +167,6 @@ const translations = {
     config_rss_add_btn: "➕ Add an RSS feed",
     config_rss_remove_btn: "Remove",
     config_tmdb_key: "TMDB API Key",
-    config_tvdb_key: "TVDB API Key (optional)",
-    config_tvdb_hint: "Optional. Used alongside TMDB to improve documentary detection and as a fallback for unmatched series. Free key at thetvdb.com.",
     config_rpdb_title: "Rating Poster DataBase aka RPDB",
     config_rpdb_enable: "Enable",
     config_rpdb_examples: "examples",
@@ -276,59 +215,6 @@ const translations = {
     install_copied: "URL copied!",
     install_copy_error: "Copy error",
 
-    // Navigation
-    nav_overview: "Overview",
-    nav_library: "Media Library",
-    nav_sources: "Sources",
-    nav_sync: "Synchronization",
-    nav_failures: "Failures",
-    nav_config: "Configuration",
-
-    // Library
-    library_search_placeholder: "Search a title...",
-    library_all: "All",
-    library_no_results: "No results",
-    library_releases_none: "No releases recorded",
-    library_col_name: "Release name",
-    library_col_quality: "Quality",
-    library_col_hash: "Hash",
-    library_col_date: "Date",
-
-    // Sources
-    sources_url: "RSS Feed",
-    sources_releases: "Releases",
-    sources_media: "Media",
-    sources_last_seen: "Last added",
-    sources_none: "No source detected — run a sync first",
-
-    // Sync extras
-    sync_auto_enabled: "Enabled",
-    sync_auto_disabled: "Disabled",
-
-    // Failed
-    failed_retry_btn: "♻️ Retry all",
-    failed_clear_btn: "🗑 Clear",
-    failed_none: "No failed releases. 🎉",
-
-    // Config extras
-    config_save_btn: "💾 Save",
-    config_saved_ok: "Configuration saved",
-    config_saved_err: "Error saving configuration",
-    config_discord_title: "Discord",
-    config_discord_enable: "Enable notifications",
-    config_discord_webhook: "Discord webhook URL",
-    config_discord_enhanced: "Enhanced notifications (poster gallery)",
-    config_discord_rpdb: "RPDB posters in Discord",
-
-    // Integrations
-    integrations_title: "🔗 Quick integrations",
-    integrations_hint: "Enter the base URL and API key to automatically generate RSS feeds and add them to the list.",
-    integrations_url_placeholder: "http://localhost:...",
-    integrations_add_all: "All",
-    integrations_add_films: "Movies",
-    integrations_add_series: "Series",
-    integrations_missing_fields: "Please fill in the URL and API key.",
-
     // Misc
     by: "By",
     donate: "Buy me some Dragibus :-)",
@@ -354,7 +240,6 @@ const translations = {
     stat_films: "Filme",
     stat_documentaires: "Dokumentarfilme",
     stat_series: "Serien",
-    stat_emissions: "TV-Sendungen",
     stat_indexed: "Indexierte Medien",
 
     // Sync history
@@ -379,7 +264,6 @@ const translations = {
     sync_films: "Filme",
     sync_docs: "Dokus",
     sync_series: "Serien",
-    sync_emissions: "Sendungen",
     sync_failed: "Nicht verarbeitet",
 
     // Config
@@ -391,8 +275,6 @@ const translations = {
     config_rss_add_btn: "➕ RSS-Feed hinzufügen",
     config_rss_remove_btn: "Entfernen",
     config_tmdb_key: "TMDB API-Schlüssel",
-    config_tvdb_key: "TVDB API-Schlüssel (optional)",
-    config_tvdb_hint: "Optional. Ergänzt TMDB zur Verbesserung der Dokumentarfilm-Erkennung und als Fallback für nicht gefundene Serien. Kostenloser Schlüssel auf thetvdb.com.",
     config_rpdb_title: "Rating Poster DataBase aka RPDB",
     config_rpdb_enable: "Aktivieren",
     config_rpdb_examples: "Beispiele",
@@ -440,59 +322,6 @@ const translations = {
     install_copy: "Kopieren",
     install_copied: "URL kopiert!",
     install_copy_error: "Kopierfehler",
-
-    // Navigation
-    nav_overview: "Übersicht",
-    nav_library: "Mediathek",
-    nav_sources: "Quellen",
-    nav_sync: "Synchronisierung",
-    nav_failures: "Fehler",
-    nav_config: "Konfiguration",
-
-    // Library
-    library_search_placeholder: "Titel suchen...",
-    library_all: "Alle",
-    library_no_results: "Keine Ergebnisse",
-    library_releases_none: "Keine Releases gespeichert",
-    library_col_name: "Release-Name",
-    library_col_quality: "Qualität",
-    library_col_hash: "Hash",
-    library_col_date: "Datum",
-
-    // Sources
-    sources_url: "RSS-Feed",
-    sources_releases: "Releases",
-    sources_media: "Medien",
-    sources_last_seen: "Zuletzt hinzugefügt",
-    sources_none: "Keine Quelle erkannt — starten Sie zuerst eine Synchronisierung",
-
-    // Sync extras
-    sync_auto_enabled: "Aktiviert",
-    sync_auto_disabled: "Deaktiviert",
-
-    // Failed
-    failed_retry_btn: "♻️ Alle wiederholen",
-    failed_clear_btn: "🗑 Leeren",
-    failed_none: "Keine fehlgeschlagenen Releases. 🎉",
-
-    // Config extras
-    config_save_btn: "💾 Speichern",
-    config_saved_ok: "Konfiguration gespeichert",
-    config_saved_err: "Fehler beim Speichern der Konfiguration",
-    config_discord_title: "Discord",
-    config_discord_enable: "Benachrichtigungen aktivieren",
-    config_discord_webhook: "Discord Webhook URL",
-    config_discord_enhanced: "Erweiterte Benachrichtigungen (Poster-Galerie)",
-    config_discord_rpdb: "RPDB-Poster in Discord",
-
-    // Integrations
-    integrations_title: "🔗 Schnellintegrationen",
-    integrations_hint: "Geben Sie die Basis-URL und den API-Schlüssel ein, um RSS-Feeds automatisch zu generieren und zur Liste hinzuzufügen.",
-    integrations_url_placeholder: "http://localhost:...",
-    integrations_add_all: "Alle",
-    integrations_add_films: "Filme",
-    integrations_add_series: "Serien",
-    integrations_missing_fields: "Bitte URL und API-Schlüssel eingeben.",
 
     // Misc
     by: "Von",

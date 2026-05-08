@@ -1,8 +1,6 @@
 const axios = require('axios');
 const sharp = require('sharp');
 
-const AVATAR_URL = 'https://raw.githubusercontent.com/Aerya/stremio-rss-catalogs/main/src/public/logo.png';
-
 function getPosterUrl(item, rpdbEnabled, rpdbKey) {
     if (rpdbEnabled && rpdbKey && item.imdb_id) {
         return `https://api.ratingposterdb.com/${rpdbKey}/imdb/poster-default/${item.imdb_id}.jpg?fallback=true`;
@@ -21,10 +19,11 @@ async function downloadImage(url) {
 }
 
 async function createCompositeImage(items, rpdbEnabled, rpdbKey) {
-    const posterWidth = 200;
-    const posterHeight = 300;
-    const spacing = 10;
+    const posterWidth = 200; // Width per poster
+    const posterHeight = 300; // Height per poster
+    const spacing = 10; // Space between posters
 
+    // Download all poster images
     const posterBuffers = await Promise.all(
         items.map(async (item) => {
             const posterUrl = getPosterUrl(item, rpdbEnabled, rpdbKey);
@@ -32,12 +31,14 @@ async function createCompositeImage(items, rpdbEnabled, rpdbKey) {
         })
     );
 
+    // Filter out failed downloads
     const validPosters = posterBuffers.filter(buffer => buffer !== null);
 
     if (validPosters.length === 0) {
         return null;
     }
 
+    // Resize all posters to uniform size
     const resizedPosters = await Promise.all(
         validPosters.map(buffer =>
             sharp(buffer)
@@ -46,9 +47,11 @@ async function createCompositeImage(items, rpdbEnabled, rpdbKey) {
         )
     );
 
+    // Calculate composite dimensions
     const totalWidth = (posterWidth * resizedPosters.length) + (spacing * (resizedPosters.length - 1));
     const totalHeight = posterHeight;
 
+    // Create composite image
     const compositeInputs = resizedPosters.map((buffer, index) => ({
         input: buffer,
         left: index * (posterWidth + spacing),
@@ -70,32 +73,6 @@ async function createCompositeImage(items, rpdbEnabled, rpdbKey) {
     return composite;
 }
 
-async function sendGallery(webhookUrl, items, rpdbEnabled, rpdbKey, title, color, filename) {
-    if (!items || items.length === 0) return;
-
-    const compositeImage = await createCompositeImage(items, rpdbEnabled, rpdbKey);
-    if (!compositeImage) return;
-
-    const FormData = require('form-data');
-    const form = new FormData();
-
-    form.append('file', compositeImage, filename);
-
-    const payload = {
-        username: 'Stremio RSS Catalog',
-        avatar_url: AVATAR_URL,
-        embeds: [{
-            title,
-            color,
-            image: { url: `attachment://${filename}` }
-        }]
-    };
-
-    form.append('payload_json', JSON.stringify(payload));
-
-    await axios.post(webhookUrl, form, { headers: form.getHeaders() });
-}
-
 async function sendDiscordNotification(webhookUrl, syncStats) {
     if (!webhookUrl) {
         return;
@@ -104,30 +81,21 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
     try {
         const isSuccess = syncStats.status === 'completed';
         const color = isSuccess ? 0x48bb78 : 0xe53e3e;
-        const title = isSuccess ? '✅ Synchronisation terminée' : '❌ Synchronisation échouée';
+        const title = isSuccess ? 'Synchronisation terminée' : '❌ Synchronisation échouée';
 
+        // 1. Main Stats Embed
         const mainEmbed = {
-            title,
-            color,
+            title: title,
+            color: color,
             fields: [
                 {
                     name: 'Ajoutés',
-                    value: [
-                        `Films : **${syncStats.filmsAdded || 0}**`,
-                        `Docs : **${syncStats.documentairesAdded || 0}**`,
-                        `Séries : **${syncStats.seriesAdded || 0}**`,
-                        `Émissions : **${syncStats.emissionsAdded || 0}**`
-                    ].join('\n'),
+                    value: `Films : **${syncStats.filmsAdded || 0}**\nDocs : **${syncStats.documentairesAdded || 0}**\nSéries : **${syncStats.seriesAdded || 0}**`,
                     inline: true
                 },
                 {
                     name: 'Totaux',
-                    value: [
-                        `Films: **${syncStats.totalFilms || 0}**`,
-                        `Docs: **${syncStats.totalDocs || 0}**`,
-                        `Séries: **${syncStats.totalSeries || 0}**`,
-                        `Émissions: **${syncStats.totalEmissions || 0}**`
-                    ].join('\n'),
+                    value: `Films: **${syncStats.totalFilms || 0}**\nDocs: **${syncStats.totalDocs || 0}**\nSéries: **${syncStats.totalSeries || 0}**`,
                     inline: true
                 },
                 {
@@ -137,9 +105,12 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
                 }
             ],
             timestamp: new Date().toISOString(),
-            footer: { text: 'Stremio RSS Catalog' }
+            footer: {
+                text: 'Stremio RSS Catalog'
+            }
         };
 
+        // Add error message if sync failed
         if (!isSuccess && syncStats.errorMessage) {
             mainEmbed.fields.push({
                 name: '❌ Erreur',
@@ -148,6 +119,7 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
             });
         }
 
+        // Add WebUI URL if available
         if (syncStats.installUrl) {
             const webUIUrl = syncStats.installUrl.replace('/manifest.json', '/dashboard');
             mainEmbed.fields.push({
@@ -157,26 +129,118 @@ async function sendDiscordNotification(webhookUrl, syncStats) {
             });
         }
 
+        // Send Main Embed
         await axios.post(webhookUrl, {
             username: 'Stremio RSS Catalog',
-            avatar_url: AVATAR_URL,
+            avatar_url: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
             embeds: [mainEmbed]
         });
 
+        // 2. Poster Gallery - Composite images with posters side by side
         if (syncStats.recentAdditions) {
-            const { rpdbEnabled, rpdbKey, recentAdditions } = syncStats;
+            const { rpdbEnabled, rpdbKey } = syncStats;
 
-            await sendGallery(webhookUrl, recentAdditions.films, rpdbEnabled, rpdbKey,
-                'Derniers Films ajoutés', 0x667eea, 'films.png');
+            // Send Films Gallery
+            if (syncStats.recentAdditions.films && syncStats.recentAdditions.films.length > 0) {
+                const compositeImage = await createCompositeImage(
+                    syncStats.recentAdditions.films,
+                    rpdbEnabled,
+                    rpdbKey
+                );
 
-            await sendGallery(webhookUrl, recentAdditions.documentaires, rpdbEnabled, rpdbKey,
-                'Derniers Documentaires ajoutés', 0x48bb78, 'documentaires.png');
+                if (compositeImage) {
+                    const FormData = require('form-data');
+                    const form = new FormData();
 
-            await sendGallery(webhookUrl, recentAdditions.series, rpdbEnabled, rpdbKey,
-                'Dernières Séries ajoutées', 0xed8936, 'series.png');
+                    form.append('file', compositeImage, 'films.png');
 
-            await sendGallery(webhookUrl, recentAdditions.emissions, rpdbEnabled, rpdbKey,
-                'Dernières Émissions TV ajoutées', 0xe91e63, 'emissions.png');
+                    const payload = {
+                        username: 'Stremio RSS Catalog',
+                        avatar_url: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
+                        embeds: [{
+                            title: 'Derniers Films ajoutés',
+                            color: 0x667eea,
+                            image: {
+                                url: 'attachment://films.png'
+                            }
+                        }]
+                    };
+
+                    form.append('payload_json', JSON.stringify(payload));
+
+                    await axios.post(webhookUrl, form, {
+                        headers: form.getHeaders()
+                    });
+                }
+            }
+
+            // Send Documentaries Gallery
+            if (syncStats.recentAdditions.documentaires && syncStats.recentAdditions.documentaires.length > 0) {
+                const compositeImage = await createCompositeImage(
+                    syncStats.recentAdditions.documentaires,
+                    rpdbEnabled,
+                    rpdbKey
+                );
+
+                if (compositeImage) {
+                    const FormData = require('form-data');
+                    const form = new FormData();
+
+                    form.append('file', compositeImage, 'documentaires.png');
+
+                    const payload = {
+                        username: 'Stremio RSS Catalog',
+                        avatar_url: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
+                        embeds: [{
+                            title: 'Derniers Documentaires ajoutés',
+                            color: 0x48bb78,
+                            image: {
+                                url: 'attachment://documentaires.png'
+                            }
+                        }]
+                    };
+
+                    form.append('payload_json', JSON.stringify(payload));
+
+                    await axios.post(webhookUrl, form, {
+                        headers: form.getHeaders()
+                    });
+                }
+            }
+
+            // Send Series Gallery
+            if (syncStats.recentAdditions.series && syncStats.recentAdditions.series.length > 0) {
+                const compositeImage = await createCompositeImage(
+                    syncStats.recentAdditions.series,
+                    rpdbEnabled,
+                    rpdbKey
+                );
+
+                if (compositeImage) {
+                    const FormData = require('form-data');
+                    const form = new FormData();
+
+                    form.append('file', compositeImage, 'series.png');
+
+                    const payload = {
+                        username: 'Stremio RSS Catalog',
+                        avatar_url: 'https://raw.githubusercontent.com/Aerya/UseFlow-FR/main/src/public/logo.png',
+                        embeds: [{
+                            title: 'Dernières Séries ajoutées',
+                            color: 0xed8936,
+                            image: {
+                                url: 'attachment://series.png'
+                            }
+                        }]
+                    };
+
+                    form.append('payload_json', JSON.stringify(payload));
+
+                    await axios.post(webhookUrl, form, {
+                        headers: form.getHeaders()
+                    });
+                }
+            }
         }
 
         console.log('[Discord] Notification sent successfully');
