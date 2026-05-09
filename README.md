@@ -1,3 +1,13 @@
+> [!WARNING]
+> **Ce dépôt est fonctionnel mais ne sera plus mis à jour.**
+>
+> Migrez vers le nouveau dépôt : **[Aerya/stremio-rss-catalog](https://github.com/Aerya/stremio-rss-catalog)**
+>
+> Votre base de données UseFlow-FR est **entièrement compatible** — aucune perte de données.
+> Après migration :
+> - Utilisez les boutons de **Maintenance** (dans Configuration) pour remettre à jour les catégories des médias déjà indexés
+> - Rechargez le manifeste dans vos addons Stremio / Nuvio / Wuplay / AIOStreams / AIOMetadata / AIOManager / etc.
+
 <h1 align="center">
   <img src="src/public/logo.png" alt="Stremio RSS Catalog" width="120"><br>
   Stremio RSS Catalog
